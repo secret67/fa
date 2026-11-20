@@ -1,0 +1,1116 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>FA Showcase</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;500;700;800&family=Readex+Pro:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500;700&display=swap">
+<style>
+/* FA showcase. Five scenes: 1 the real app icon floating in 3D inside two neon rings (tilt with the pointer, drag to spin);
+   2 an isometric hairline desk: pen tablet + monitor, what you draw on the tablet appears on the screen;
+   3 a painting builds itself as you scroll: sketch, ink, colour, light; 4 a pile of LED feature badges; 5 real screens + mark.
+   One committed dark look, FA blue #5cc8e0 is the only accent. */
+:root {
+  --bg: #090b0d; --bg-2: #15191d; --ink: #e8eef2; --mute: #8a97a2;
+  --blue: #5cc8e0; --hair: rgba(232,238,242,.42); --line: rgba(92,200,224,.16);
+  --f-display: "Alexandria", "Readex Pro", "Segoe UI", Tahoma, sans-serif;
+  --f-body: "Readex Pro", "Segoe UI", Tahoma, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { background: var(--bg); scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 16px; line-height: 1.7; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+.gutter { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .35em; color: var(--blue); direction: ltr; }
+h1, h2 { font-family: var(--f-display); text-wrap: balance; margin: 0; }
+h2 { font-size: clamp(30px, 5.2vw, 54px); line-height: 1.4; margin: 10px 0 8px; }
+.lede { color: var(--mute); margin: 0 auto; max-width: 36ch; text-wrap: pretty; }
+.head { text-align: center; max-width: 42rem; margin: 0 auto; }
+.grain { position: fixed; inset: -50%; z-index: 31; pointer-events: none; opacity: .05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 1.2s steps(3) infinite; }
+@keyframes grain { 0% { transform: translate(0,0) } 33% { transform: translate(-3%,2%) } 66% { transform: translate(2%,-3%) } }
+.dots-nav { position: fixed; z-index: 40; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); right: max(18px, env(safe-area-inset-right, 0px)); display: flex; gap: 4px; }
+.dots-nav a { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; }
+.dots-nav a i { width: 5px; height: 5px; border-radius: 50%; background: var(--mute); opacity: .6; transition: width .3s, height .3s, opacity .3s, background-color .3s; }
+.dots-nav a.on i { width: 11px; height: 11px; opacity: 1; background: var(--ink); }
+
+/* ---------- 1 · icon in neon rings ---------- */
+.hero { position: relative; min-height: 100vh; min-height: 100svh; display: grid; grid-template-rows: 1fr auto; justify-items: center; padding-block: 40px 70px; overflow: hidden;
+  background: radial-gradient(ellipse 55% 45% at 50% 42%, rgba(92,200,224,.16), transparent 70%), var(--bg); }
+.orbit { position: relative; width: min(560px, 92vw, 62svh); aspect-ratio: 1; align-self: center; perspective: 1100px; touch-action: pan-y; cursor: grab; user-select: none; -webkit-user-select: none; }
+.orbit:active { cursor: grabbing; }
+.rig { position: absolute; inset: 0; transform-style: preserve-3d; will-change: transform; }
+.ring { position: absolute; inset: 6%; border-radius: 50%; transform-style: preserve-3d; }
+.ring::before { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 3px solid var(--blue);
+  box-shadow: 0 0 18px rgba(92,200,224,.85), inset 0 0 18px rgba(92,200,224,.6), 0 0 60px rgba(92,200,224,.35); }
+.ring.r2::before { border-color: #bff0fb; box-shadow: 0 0 16px rgba(191,240,251,.8), inset 0 0 16px rgba(191,240,251,.5), 0 0 50px rgba(92,200,224,.3); }
+.ring b { position: absolute; top: -6px; left: calc(50% - 6px); width: 12px; height: 12px; border-radius: 50%; background: #fff; box-shadow: 0 0 14px #fff, 0 0 30px var(--blue); }
+.tile { position: absolute; inset: 27%; transform-style: preserve-3d; }
+.tile i { position: absolute; inset: 0; border-radius: 20.5%; background: linear-gradient(150deg, #24333b, #0d1418); box-shadow: 0 0 0 1px rgba(92,200,224,.25); }
+.tile img { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 20.5%; display: block; transform: translateZ(1px);
+  box-shadow: 0 0 0 1px rgba(255,255,255,.1); pointer-events: none; }
+.tile .sheen { position: absolute; inset: 0; border-radius: 20.5%; transform: translateZ(2px); pointer-events: none; mix-blend-mode: screen;
+  background: linear-gradient(var(--sa, 115deg), transparent 30%, rgba(255,255,255,.22) 46%, transparent 58%); }
+.halo { position: absolute; inset: 22%; border-radius: 30%; background: radial-gradient(closest-side, rgba(92,200,224,.45), transparent); filter: blur(30px); transform: translateZ(-80px); }
+.hero .copy { text-align: center; position: relative; z-index: 2; }
+.hero h1 { font-size: clamp(40px, 8vw, 92px); line-height: 1.3; margin: 10px 0 6px;
+  background: linear-gradient(to bottom, #fff 40%, rgba(232,238,242,.55)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hero h1 em { font-style: normal; color: var(--blue); -webkit-text-fill-color: var(--blue); text-shadow: 0 0 40px rgba(92,200,224,.45); }
+.hint { margin-top: 14px; font-family: var(--f-mono); font-size: 10px; letter-spacing: .3em; color: var(--mute); direction: ltr; }
+
+/* ---------- 2 · isometric desk ---------- */
+.desk { padding-block: 110px 90px; }
+.scene { width: min(1000px, 100%); margin: 30px auto 0; position: relative; }
+.scene svg { display: block; width: 100%; height: auto; max-height: 66svh; overflow: visible; touch-action: none; }
+.hl { fill: none; stroke: var(--hair); stroke-width: 1.1; stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.hl.soft { stroke: rgba(232,238,242,.16); }
+.hl.blue { stroke: rgba(92,200,224,.6); }
+.fillface { fill: #0d1114; }
+.ink { fill: none; stroke: var(--blue); stroke-linecap: round; stroke-linejoin: round; filter: drop-shadow(0 0 3px rgba(92,200,224,.9)); }
+.trace { fill: none; stroke: rgba(92,200,224,.22); stroke-width: 1; stroke-linecap: round; }
+.scene .tip { fill: #eafaff; filter: drop-shadow(0 0 6px var(--blue)); }
+.scene .cur { fill: none; stroke: #eafaff; stroke-width: 1.2; }
+.legend { display: flex; justify-content: center; align-items: center; gap: 22px; flex-wrap: wrap; margin-top: 18px; color: var(--mute); font-size: 14px; }
+.legend span { display: inline-flex; align-items: center; gap: 8px; }
+.legend i { width: 18px; height: 2px; background: var(--blue); box-shadow: 0 0 8px var(--blue); }
+.clear { font: inherit; font-size: 13px; color: var(--ink); background: none; border: 0; padding: 8px 16px; border-radius: 999px; box-shadow: 0 0 0 1px rgba(232,238,242,.18); cursor: pointer; transition: box-shadow .2s, scale .15s; }
+.clear:hover { box-shadow: 0 0 0 1px var(--blue); } .clear:active { scale: .96; }
+
+/* ---------- 3 · painting builds itself ---------- */
+.paint { position: relative; height: 320vh; }
+.paint .pin { position: sticky; top: 0; height: 100vh; height: 100svh; display: grid; align-content: center; justify-items: center; gap: 22px; overflow: hidden; }
+.studio { display: grid; grid-template-columns: minmax(0, 1fr) 190px; gap: 14px; width: min(980px, 100%); }
+.art { position: relative; aspect-ratio: 16 / 10; border-radius: 18px; overflow: hidden; background: #0b0f12;
+  box-shadow: 0 0 0 1px rgba(232,238,242,.12), 0 40px 90px -30px rgba(0,0,0,.9), 0 0 120px -40px rgba(92,200,224,.35); }
+.art svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.art .sk { fill: none; stroke: rgba(200,210,218,.55); stroke-width: 1.3; stroke-linecap: round; }
+.art .ln { fill: none; stroke: #eef6fa; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.layers { border-radius: 18px; background: #0f1316; box-shadow: 0 0 0 1px rgba(232,238,242,.1); padding: 12px; display: flex; flex-direction: column; gap: 8px; align-self: start; }
+.layers h3 { margin: 0 0 2px; font-family: var(--f-mono); font-size: 10px; letter-spacing: .3em; color: var(--mute); font-weight: 500; direction: ltr; text-align: right; }
+.layer { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 10px; font-size: 13.5px; color: var(--mute); opacity: .45; transition: opacity .3s, background-color .3s, color .3s; }
+.layer.on { opacity: 1; color: var(--ink); }
+.layer.cur { background: rgba(92,200,224,.12); box-shadow: inset 0 0 0 1px rgba(92,200,224,.35); }
+.layer i { width: 26px; height: 18px; border-radius: 4px; flex: none; background: #1d252b; box-shadow: inset 0 0 0 1px rgba(232,238,242,.12); }
+.layer.on i { background: linear-gradient(135deg, #2b5866, #0e1b21); }
+.scrub { width: min(980px, 100%); display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.scrub div { font-size: 12.5px; color: var(--mute); text-align: center; }
+.scrub div::before { content: ""; display: block; height: 3px; border-radius: 2px; margin-bottom: 8px; background: linear-gradient(270deg, var(--blue) var(--f, 0%), rgba(232,238,242,.1) var(--f, 0%)); box-shadow: 0 0 10px rgba(92,200,224, calc(var(--g, 0) * .6)); }
+@media (max-width: 760px) { .studio { grid-template-columns: 1fr; } .layers { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; padding: 6px; direction: ltr; } .layers h3 { display: none; } .layer { justify-content: center; padding: 8px 4px; } .layer i { display: none; } }
+
+/* ---------- 3D light: a real recording of FA's colour-light panel ---------- */
+.light3d { padding-block: 110px 60px; }
+.light3d .split { width: min(980px, 100%); margin: 40px auto 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 400px); gap: 44px; align-items: center; }
+.light3d .vid { border-radius: 22px; overflow: hidden; background: #24272c; aspect-ratio: 596 / 600;
+  box-shadow: 0 0 0 1px rgba(232,238,242,.12), 0 40px 90px -30px rgba(0,0,0,.9), 0 0 120px -30px rgba(92,200,224,.45); }
+.light3d video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.light3d h3 { font-family: var(--f-display); font-size: clamp(24px, 3.2vw, 32px); line-height: 1.45; margin: 0 0 12px; }
+.light3d ul { margin: 18px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.light3d li { position: relative; padding-inline-start: 22px; color: #c6d0d7; }
+.light3d li::before { content: ""; position: absolute; inset-inline-start: 0; top: .78em; width: 10px; height: 3px; border-radius: 2px; background: var(--blue); box-shadow: 0 0 8px var(--blue); }
+.light3d .note { margin-top: 16px; color: var(--mute); font-size: 13px; }
+@media (max-width: 760px) { .light3d .split { grid-template-columns: 1fr; } .light3d .vid { max-width: 420px; margin-inline: auto; } }
+/* ---------- calligraphy: broad nib on guides with a dot ladder ---------- */
+.callig { padding-block: 110px 60px; }
+.callig .split { width: min(1040px, 100%); margin: 40px auto 0; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 44px; align-items: center; }
+.paper { position: relative; border-radius: 22px; overflow: hidden; background: radial-gradient(ellipse 80% 70% at 50% 40%, #182026, #0e1215);
+  box-shadow: 0 0 0 1px rgba(232,238,242,.12), 0 40px 90px -30px rgba(0,0,0,.9), 0 0 120px -40px rgba(92,200,224,.35); }
+.paper canvas { display: block; width: 100%; aspect-ratio: 600 / 360; }
+.paper small { position: absolute; inset: auto 14px 10px auto; font-size: 11px; color: var(--mute); opacity: .8; }
+.callig h3 { font-family: var(--f-display); font-size: clamp(22px, 3vw, 30px); line-height: 1.45; margin: 0 0 6px; }
+.callig ul { margin: 16px 0 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.callig li { position: relative; padding-inline-start: 22px; color: #c6d0d7; }
+.callig li::before { content: ""; position: absolute; inset-inline-start: 2px; top: .62em; width: 8px; height: 8px; background: var(--blue); transform: rotate(45deg); box-shadow: 0 0 8px var(--blue); }
+.scripts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.scripts span { font-size: 13.5px; padding: 4px 12px; border-radius: 999px; color: var(--ink); box-shadow: inset 0 0 0 1px rgba(232,238,242,.16); }
+.scripts span.lat { direction: ltr; color: var(--mute); }
+@media (max-width: 860px) { .callig .split { grid-template-columns: 1fr; } }
+/* ---------- 4 · feature ring: cards on a tilted 3D cylinder (21st · curved / cylinder galleries) ---------- */
+.ringsec { padding-block: 110px 60px; overflow: hidden; }
+.ring3d { position: relative; height: 420px; margin: 36px auto 0; perspective: 1500px; touch-action: pan-y; cursor: grab; user-select: none; -webkit-user-select: none; outline: none; }
+.ring3d:active { cursor: grabbing; }
+.ring3d:focus-visible { outline: 2px solid var(--blue); outline-offset: 6px; border-radius: 20px; }
+.cyl { position: absolute; left: 50%; top: 46%; width: 0; height: 0; transform-style: preserve-3d; will-change: transform; }
+.rc { position: absolute; left: calc(var(--cw) / -2); top: calc(var(--ch) / -2); width: var(--cw); height: var(--ch); border-radius: 18px; overflow: hidden;
+  background: linear-gradient(160deg, #1e262c, #11161a 70%); box-shadow: 0 0 0 1px rgba(232,238,242,.12), 0 30px 60px -24px rgba(0,0,0,.9);
+  display: flex; flex-direction: column; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.rc.front { box-shadow: 0 0 0 1px rgba(92,200,224,.6), 0 30px 60px -24px rgba(0,0,0,.9), 0 0 50px -10px rgba(92,200,224,.5); }
+.rc svg, .face svg { direction: ltr; }
+.rc svg { display: block; width: 100%; aspect-ratio: 4 / 3; background: #0f1418; }
+.rc b { display: block; padding: 4px 14px 0; font-family: var(--f-display); font-size: 16px; line-height: 1.45; }
+.rc span { display: block; padding: 10px 14px 0; font-family: var(--f-mono); font-size: 10px; letter-spacing: .2em; color: var(--blue); direction: ltr; text-align: right; }
+.ring-floor { position: absolute; left: 50%; bottom: 8px; width: min(700px, 90%); height: 60px; transform: translateX(-50%); background: radial-gradient(closest-side, rgba(92,200,224,.18), transparent); filter: blur(8px); pointer-events: none; }
+.ringcap { width: min(560px, 100%); margin: 6px auto 0; text-align: center; min-height: 5.6em; }
+.ringcap b { display: block; font-family: var(--f-display); font-size: 22px; }
+.ringcap p { margin: 4px 0 0; color: var(--mute); text-wrap: pretty; }
+@media (max-width: 760px) { .ring3d { height: 340px; } }
+@media (max-width: 760px) { .pile { height: 420px; } .pile-in { scale: .46; } }
+
+/* ---------- 3 · lanyard rail of versions ---------- */
+.versions { position: relative; padding-block: 120px 80px; }
+.versions .head { text-align: center; max-width: 40rem; margin: 0 auto; }
+.versions h2 { font-family: var(--f-display); font-size: clamp(32px, 5.5vw, 56px); margin: 10px 0 8px; line-height: 1.4; text-wrap: balance; }
+.versions .head p { color: var(--mute); margin: 0; }
+.rail { position: relative; width: min(1180px, 100%); margin: 56px auto 0; height: 660px; }
+.rail .bar-top { position: absolute; top: 0; left: 2%; right: 2%; height: 6px; border-radius: 3px; background: linear-gradient(to bottom, #3a444d, #20272d); box-shadow: 0 6px 20px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.15); }
+.lan { position: absolute; top: 3px; width: var(--w); transform: translateX(-50%); }
+.swing { transform-origin: 50% 0; will-change: transform; display: flex; flex-direction: column; align-items: center; }
+.ribbon { width: 14px; height: var(--len); background: linear-gradient(90deg, rgba(0,0,0,.35), transparent 30%, transparent 70%, rgba(0,0,0,.35)), var(--tone); box-shadow: 0 0 18px -4px var(--tone); }
+.clip { width: 22px; height: 14px; margin-top: -2px; border-radius: 3px 3px 6px 6px; background: linear-gradient(#c9d3da, #7d8a94); box-shadow: 0 2px 4px rgba(0,0,0,.5); }
+.badge { display: block; width: 100%; aspect-ratio: 62 / 106; border: 0; padding: 0; background: none; cursor: pointer; perspective: 900px; margin-top: -3px; border-radius: 14px; }
+.badge .inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform .8s cubic-bezier(.3,1.4,.4,1); }
+.badge.flipped .inner { transform: rotateY(180deg); }
+.face { position: absolute; inset: 0; border-radius: 14px; overflow: hidden; -webkit-backface-visibility: hidden; backface-visibility: hidden;
+  background: linear-gradient(160deg, #222a31, #13171b 60%); box-shadow: 0 24px 50px -16px rgba(0,0,0,.9), 0 0 0 1px rgba(232,238,242,.12), inset 0 1px 0 rgba(255,255,255,.08);
+  display: flex; flex-direction: column; text-align: right; }
+.face::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,.17) 50%, transparent 60%) no-repeat; background-size: 260% 100%; background-position: 160% 0; animation: glint 6s ease-in-out var(--sd, 0s) infinite; }
+@keyframes glint { 0%, 60% { background-position: 160% 0; } 88%, 100% { background-position: -60% 0; } }
+.badge:hover .face::after { animation-duration: 1.6s; }
+@media (prefers-reduced-motion: reduce) { .face::after { animation: none; background-position: 50% 0; } }
+.face .band { height: 22px; background: var(--tone); display: grid; place-items: center; flex: none; }
+.face .band i { width: 26px; height: 6px; border-radius: 3px; background: #090b0d; }
+.front .pic { margin: 10px 10px 0; aspect-ratio: 4 / 3; border-radius: 10px; overflow: hidden; flex: none; box-shadow: 0 0 0 1px rgba(232,238,242,.1); }
+.front .pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.face .meta { padding: 10px 12px 14px; display: flex; flex-direction: column; gap: 3px; min-height: 0; flex: 1; }
+.face .ver { font-family: var(--f-mono); font-size: 22px; font-weight: 500; color: var(--ink); direction: ltr; text-align: right; line-height: 1.1; }
+.face .tt { font-family: var(--f-display); font-size: 14px; line-height: 1.55; color: var(--ink); }
+.face .hint { margin-top: auto; font-family: var(--f-mono); font-size: 9px; letter-spacing: .2em; color: var(--mute); }
+.back { transform: rotateY(180deg); }
+.back .txt { font-size: 12.5px; line-height: 1.65; color: #c6d0d7; overflow: auto; min-height: 0; }
+.back .tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: auto; padding-top: 6px; }
+.back .tags span { font-size: 10.5px; padding: 1px 8px; border-radius: 999px; background: rgba(92,200,224,.12); color: var(--blue); }
+.caption { text-align: center; color: var(--mute); font-size: 14px; margin-top: 8px; }
+@media (max-width: 760px) {
+  .rail { height: auto; display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 16px 24px; margin-top: 40px; }
+  .lan { position: relative; flex: none; transform: none; scroll-snap-align: center; --len: 60px; }
+}
+
+/* ---------- 4 · device: the tablet tilts flat as you scroll (idea 3 · ContainerScroll) ---------- */
+.device { position: relative; height: 220vh; }
+.device .pin { position: sticky; top: 0; height: 100vh; height: 100svh; display: grid; align-content: center; justify-items: center; gap: 30px; perspective: 1100px; overflow: hidden; padding-top: 76px; }
+.device .head { text-align: center; max-width: 40rem; transform: translateY(var(--hy, 0px)); }
+.device h2 { font-family: var(--f-display); font-size: clamp(30px, 5vw, 52px); margin: 10px 0 8px; line-height: 1.4; text-wrap: balance; }
+.device .head p { color: var(--mute); margin: 0; }
+.tab { width: min(960px, 92vw, 92svh); aspect-ratio: 16 / 10; padding: clamp(7px, 1.2vw, 14px); border-radius: clamp(18px, 2.4vw, 30px);
+  background: linear-gradient(#2a3239, #14181c); transform-origin: 50% 0; transform: rotateX(var(--rx, 20deg)) scale(var(--sc, 1.04)); will-change: transform;
+  box-shadow: 0 0 0 1px rgba(232,238,242,.14), inset 0 1px 0 rgba(255,255,255,.1), 0 40px 90px -20px rgba(0,0,0,.95), 0 0 140px -30px rgba(92,200,224,.4); }
+.tab img { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: clamp(11px, 1.4vw, 18px); outline: 1px solid rgba(255,255,255,.08); outline-offset: -1px; }
+
+/* ---------- 3D tools: FA's own tools as frosted gel, raymarched (ported from 21st · Foundation Primitives) ---------- */
+.tools { padding-block: 110px 50px; }
+.prim { position: relative; width: min(1040px, 100%); height: clamp(330px, 36vw, 420px); margin: 40px auto 0; border-radius: 28px; overflow: hidden; color: var(--ink);
+  background: radial-gradient(ellipse 70% 80% at 50% 40%, rgba(92,200,224,.07), transparent 70%), #0d1013; box-shadow: inset 0 0 0 1px rgba(232,238,242,.06);
+  touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+.prim canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; pointer-events: none; }
+.prim button { position: absolute; left: 0; top: 0; width: 0; height: 0; padding: 0; border: 0; border-radius: 50%; background: none; cursor: grab; touch-action: none; }
+.prim button:active { cursor: grabbing; }
+.prim .flat { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 3%; padding-inline: 6%; }
+.prim .flat i { width: 12%; aspect-ratio: 1; border-radius: 50%; }
+.toolcap { width: min(560px, 100%); margin: 22px auto 0; text-align: center; min-height: 5.4em; }
+.toolcap b { display: block; font-family: var(--f-display); font-size: 22px; font-weight: 700; }
+.toolcap span { display: block; color: var(--mute); font-size: 15px; margin-top: 4px; text-wrap: pretty; }
+@media (max-width: 760px) { .prim { height: 440px; } }
+/* ---------- 5 · screens + mark ---------- */
+.screens { padding-block: 110px 40px; }
+.strip { display: flex; gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 34px max(16px, calc(50vw - 380px)) 30px; scrollbar-width: none; }
+.strip::-webkit-scrollbar { display: none; }
+.shot { flex: none; width: min(760px, 86vw); scroll-snap-align: center; margin: 0; }
+.shot .fr { padding: clamp(6px, 1.1vw, 12px); border-radius: clamp(16px, 2.2vw, 26px); background: linear-gradient(#2a3239, #14181c);
+  box-shadow: 0 0 0 1px rgba(232,238,242,.14), inset 0 1px 0 rgba(255,255,255,.1), 0 30px 70px -24px rgba(0,0,0,.95); }
+.shot img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: clamp(10px, 1.3vw, 15px); outline: 1px solid rgba(255,255,255,.08); outline-offset: -1px; }
+.shot figcaption { margin-top: 12px; color: var(--mute); font-size: 14px; text-align: center; }
+.mark { min-height: 90vh; display: grid; place-content: center; justify-items: center; text-align: center; gap: 10px; padding-block: 100px;
+  background: radial-gradient(ellipse 45% 55% at 50% 42%, rgba(92,200,224,.13), transparent 70%), var(--bg); }
+.mark img { width: 128px; height: 128px; filter: drop-shadow(0 20px 50px rgba(92,200,224,.45)); }
+.mark .name { font-family: var(--f-display); font-size: clamp(44px, 8vw, 78px); line-height: 1; margin-top: 10px; direction: ltr; }
+.mark .sub { font-family: var(--f-mono); letter-spacing: .5em; color: var(--blue); font-size: 13px; direction: ltr; }
+.mark p { color: var(--mute); font-size: 18px; margin: 14px 0 0; }
+.go { display: inline-flex; align-items: center; gap: 10px; margin-top: 22px; padding: 12px 24px; border-radius: 999px; text-decoration: none; color: #061015; font-weight: 500; background: var(--blue);
+  box-shadow: 0 0 40px -6px rgba(92,200,224,.7); transition: box-shadow .3s, scale .15s; }
+.go:hover { box-shadow: 0 0 60px -4px rgba(92,200,224,.9); } .go:active { scale: .96; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; } .grain { animation: none; }
+  .light3d video { display: none; } .light3d .vid { background: url(img/light-poster.jpg) center / cover; }
+  .device { height: auto; } .device .pin { position: relative; height: auto; padding-block: 100px; } .tab { transform: none; }
+  .paint { height: auto; } .paint .pin { position: relative; height: auto; padding-block: 100px; }
+}
+</style>
+
+<nav class="dots-nav" aria-label="أقسام الصفحة">
+  <a href="#hero" aria-label="FA"><i></i></a>
+  <a href="#desk" aria-label="القلم والشاشة"><i></i></a>
+  <a href="#paint" aria-label="من السكتش للضو"><i></i></a>
+  <a href="#light3d" aria-label="الضو المجسّم"><i></i></a>
+  <a href="#callig" aria-label="للخطّاطين"><i></i></a>
+  <a href="#ring" aria-label="الميزات"><i></i></a>
+  <a href="#versions" aria-label="النسخ"><i></i></a>
+  <a href="#device" aria-label="على التابلت"><i></i></a>
+  <a href="#tools" aria-label="الأدوات"><i></i></a>
+</nav>
+<div class="grain"></div>
+
+<main dir="rtl" lang="ar">
+  <!-- 1 -->
+  <section class="hero gutter" id="hero" data-sec>
+    <div class="orbit" id="orbit" aria-hidden="true">
+      <div class="rig" id="rig">
+        <div class="halo"></div>
+        <div class="ring r1" id="r1"><b></b></div>
+        <div class="ring r2" id="r2"><b></b></div>
+        <div class="tile" id="tile"></div>
+      </div>
+    </div>
+    <div class="copy">
+      <div class="eyebrow">FA · FONT ART</div>
+      <h1>استوديو رسم <em>كامل</em></h1>
+      <p class="lede">طبقات، فرش، ألوان مائية وزيتية، وحفظ PSD. على ويندوز وتابلت أندرويد.</p>
+      <div class="hint">MOVE TO TILT · DRAG TO SPIN</div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="desk gutter" id="desk" data-sec>
+    <div class="head">
+      <div class="eyebrow">PEN · TABLET · SCREEN</div>
+      <h2>ارسم على الطاولة، بيطلع على الشاشة</h2>
+      <p class="lede">FA بيقرأ ضغط القلم، فالخط بيتخن ويرفع متل ما إيدك بتحس. جرّب: اضغط واسحب على سطح التابلت.</p>
+    </div>
+    <div class="scene"><svg id="iso" role="img" aria-label="رسم إيزومتري لتابلت رسم موصول بشاشة كمبيوتر، والخط المرسوم على التابلت بيظهر على الشاشة"></svg></div>
+    <div class="legend"><span><i></i>اللي بترسمه بيظهر على الشاشة</span><button class="clear" id="clr" type="button">امسح الشاشة</button></div>
+  </section>
+
+  <!-- 3 -->
+  <section class="paint" id="paint" data-sec>
+    <div class="pin gutter">
+      <div class="head">
+        <div class="eyebrow">SKETCH · INK · COLOUR · LIGHT</div>
+        <h2>من السكتش لحد الضو</h2>
+        <p class="lede">انزل لتحت، واللوحة بتنبني طبقة طبقة.</p>
+      </div>
+      <div class="studio">
+        <div class="art">
+          <svg id="art" viewBox="0 0 960 600" preserveAspectRatio="xMidYMid slice" aria-label="لوحة: قمر فوق جبال وبحر، بتنبني من سكتش لتحبير لتلوين لضو" role="img">
+            <defs>
+              <linearGradient id="gSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#061a24"/><stop offset=".7" stop-color="#0f3a4a"/><stop offset="1" stop-color="#1d5d70"/></linearGradient>
+              <linearGradient id="gM1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1f4c5c"/><stop offset="1" stop-color="#0c2029"/></linearGradient>
+              <linearGradient id="gM2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#14323d"/><stop offset="1" stop-color="#070f13"/></linearGradient>
+              <linearGradient id="gSea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a7487"/><stop offset="1" stop-color="#071318"/></linearGradient>
+              <radialGradient id="gMoon"><stop offset="0" stop-color="#ffffff"/><stop offset=".7" stop-color="#d9f6fd"/><stop offset="1" stop-color="#9adfee"/></radialGradient>
+              <radialGradient id="gGlow" cx="560" cy="200" r="420" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#9adfee" stop-opacity=".55"/><stop offset=".35" stop-color="#5cc8e0" stop-opacity=".18"/><stop offset="1" stop-color="#5cc8e0" stop-opacity="0"/></radialGradient>
+              <linearGradient id="gPath" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8fbff" stop-opacity=".9"/><stop offset="1" stop-color="#5cc8e0" stop-opacity="0"/></linearGradient>
+            </defs>
+            <g id="cColor" opacity="0">
+              <rect width="960" height="600" fill="url(#gSky)"/>
+              <circle cx="560" cy="200" r="86" fill="url(#gMoon)"/>
+              <path d="M0 400 C 110 330 200 300 300 350 S 470 280 600 340 S 800 380 960 300 L960 600 L0 600Z" fill="url(#gM1)"/>
+              <path d="M0 470 C 150 420 280 440 400 480 S 700 410 960 450 L960 600 L0 600Z" fill="url(#gM2)"/>
+              <rect y="505" width="960" height="95" fill="url(#gSea)"/>
+            </g>
+            <g id="cLight" opacity="0">
+              <rect width="960" height="600" fill="url(#gGlow)" style="mix-blend-mode:screen"/>
+              <path d="M520 505 L600 505 L640 600 L480 600Z" fill="url(#gPath)" opacity=".75"/>
+              <path d="M300 350 S 470 280 600 340" fill="none" stroke="#bff0fb" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+            </g>
+            <g id="cSketch"></g>
+            <g id="cInk"></g>
+          </svg>
+        </div>
+        <div class="layers" aria-label="الطبقات">
+          <h3>LAYERS</h3>
+          <div class="layer" data-l="3"><i></i>ضو</div>
+          <div class="layer" data-l="2"><i></i>تلوين</div>
+          <div class="layer" data-l="1"><i></i>تحبير</div>
+          <div class="layer" data-l="0"><i></i>سكتش</div>
+        </div>
+      </div>
+      <div class="scrub" id="scrub"><div>سكتش</div><div>تحبير</div><div>تلوين</div><div>ضو</div></div>
+    </div>
+  </section>
+
+  <section class="light3d gutter" id="light3d" data-sec>
+    <div class="head">
+      <div class="eyebrow">COLOUR LIGHT · 3D</div>
+      <h2>ضو مجسّم، بتحرّكه بإيدك</h2>
+      <p class="lede">قبل ما تلوّن، شوف وين بيوقع الضو ووين الظل على راس أو كرة حقيقية.</p>
+    </div>
+    <div class="split">
+      <div>
+        <h3>لوحة «ضوء اللون» جوّا FA</h3>
+        <p class="lede" style="margin:0;max-width:none">الفيديو تسجيل حقيقي من البرنامج: الضو بيلف حوالين الراس، وبعدين إضاءات جاهزة.</p>
+        <ul>
+          <li>كرة، راس، أو مسطحات</li>
+          <li>ضو رئيسي، ضو تعبئة، وضو حواف</li>
+          <li>إضاءات جاهزة: ريمبرانت، فراشة، ضوء القمر، نار من تحت، ضوء خلفي…</li>
+          <li>ألوان الضو والظل جاهزة للتلوين، و«ضوء على رسمتي»</li>
+        </ul>
+      </div>
+      <div class="vid"><video src="img/light.mp4" poster="img/light-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="تسجيل من FA: ضو بيلف حوالين راس مجسّم، وبعدين إضاءة ريمبرانت وضوء القمر ونار من تحت"></video></div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="callig gutter" id="callig" data-sec>
+    <div class="head">
+      <div class="eyebrow">FOR CALLIGRAPHERS</div>
+      <h2>للخطّاطين: قصبة، ونقطة، وسطر</h2>
+      <p class="lede">FA بيقيس متل ما الخطاط بيقيس على الورق: بعرض القلم وبالنقطة.</p>
+    </div>
+    <div class="split">
+      <div class="paper"><canvas id="callCv" width="1200" height="720" role="img" aria-label="قلم عريض بزاوية ثابتة بيكتب ألف وباء ونقطة على أسطر الخطاط، وجنبها سلّم نقاط معيّنية بيقيس طول الألف"></canvas><small>رسم توضيحي للفكرة</small></div>
+      <div>
+        <h3>أدوات الخط جوّا البرنامج</h3>
+        <ul>
+          <li>أسطر الخطاط للألف والسطر والنزول، ومعها سلّم النقاط بأول كل سطر.</li>
+          <li>لكل خط نسب حروفه، والقياس بعرض القلم.</li>
+          <li>دوائر توجيه للحروف المستديرة.</li>
+          <li>أقلام قصب للثلث والديواني، وقصب بالحبر المبلول، وريشة مدببة.</li>
+          <li>حجم الفرشاة بيصير عرض القلم، وزاويته بتنضبط عليها.</li>
+          <li>تصدير SVG بحواف ناعمة، للشعارات والخطوط.</li>
+        </ul>
+        <div class="scripts"><span>نسخ</span><span>ثلث</span><span>رقعة</span><span>ديواني</span><span>فارسي</span><span class="lat">Italic</span><span class="lat">Foundational</span><span class="lat">Blackletter</span><span class="lat">Copperplate</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ringsec gutter" id="ring" data-sec>
+    <div class="head">
+      <div class="eyebrow">EVERYTHING IN ONE PLACE</div>
+      <h2>كل اللي بتحتاجه، بحلقة وحدة</h2>
+      <p class="lede">الحلقة بتلف لحالها. اسحبها، أو اضغط على أي ميزة عشان تجيبها لقدّام.</p>
+    </div>
+    <div class="ring3d" id="ring3d" tabindex="0" role="group" aria-roledescription="carousel" aria-label="ميزات FA">
+      <div class="cyl" id="cyl"></div>
+      <div class="ring-floor"></div>
+    </div>
+    <div class="ringcap" aria-live="polite"><b id="rcT"></b><p id="rcD"></p></div>
+  </section>
+
+  <section class="versions gutter" id="versions" data-sec>
+    <div class="head">
+      <div class="eyebrow">THE VERSIONS</div>
+      <h2>عشر نسخ، معلّقة على حبل واحد</h2>
+      <p>مرّر الماوس على الحبل عشان تهزّها، واضغط على أي بطاقة عشان تقلبها وتقرأ شو اللي انضاف.</p>
+    </div>
+    <div class="rail" id="rail"><div class="bar-top"></div></div>
+    <p class="caption" id="cap">كل بطاقة نسخة حقيقية من ملاحظات الإصدار.</p>
+  </section>
+
+  <section class="device" id="device" data-sec>
+    <div class="pin gutter" id="pin">
+      <div class="head">
+        <div class="eyebrow">IN YOUR HANDS</div>
+        <h2>نفس الاستوديو، على الكمبيوتر والتابلت</h2>
+        <p>ويندوز وأندرويد، بالماوس والقلم واللمس.</p>
+      </div>
+      <div class="tab"><img src="img/dev1.jpg" alt="FA على تابلت أندرويد: اللوحة وشريط الأدوات" loading="lazy"></div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="tools gutter" id="tools" data-sec>
+    <div class="head">
+      <div class="eyebrow">THE TOOLS · IN 3D</div>
+      <h2>أدوات FA، بين إيديك</h2>
+      <p class="lede">مرّر على أي أداة عشان ترفعها، اسحبها عشان تلفّها، واضغط عليها عشان تقرأ عنها.</p>
+    </div>
+    <div class="prim" id="prim" role="group" aria-label="أدوات FA بشكل مجسّم"><canvas aria-hidden="true"></canvas></div>
+    <div class="toolcap" aria-live="polite"><b id="tcN"></b><span id="tcD"></span></div>
+  </section>
+
+  <section class="mark gutter" aria-label="FA Font Art">
+    <img src="img/tile.png" alt="أيقونة FA">
+    <div class="name">FA</div>
+    <div class="sub">FONT ART</div>
+    <p>برنامج واحد بدل Photoshop و Procreate و Clip Studio.</p>
+    <a class="go" href="site/index.html">ادخل صفحة FA <span aria-hidden="true">←</span></a>
+  </section>
+</main>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $ = id => document.getElementById(id);
+  const clamp = (v, a = 0, b = 1) => v < a ? a : v > b ? b : v;
+  const NS = 'http://www.w3.org/2000/svg';
+  const mk = (tag, attrs, parent) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; };
+
+  /* dots */
+  const links = [...document.querySelectorAll('.dots-nav a')], secs = [...document.querySelectorAll('[data-sec]')];
+  const markDots = () => { const mid = innerHeight / 2; let cur = 0;
+    secs.forEach((s, i) => { const r = s.getBoundingClientRect(); if (r.top <= mid && r.bottom > mid) cur = i; });
+    links.forEach((a, i) => a.classList.toggle('on', i === cur)); };
+  addEventListener('scroll', markDots, { passive: true }); markDots();
+
+  /* ---------- 1 · icon: extruded tile + two neon rings ---------- */
+  const tile = $('tile');
+  for (let i = 14; i >= 1; i--) { const s = document.createElement('i'); s.style.transform = 'translateZ(' + (-i * 1.6) + 'px)'; s.style.filter = 'brightness(' + (0.55 + 0.03 * (14 - i)) + ')'; tile.appendChild(s); }
+  const img = new Image(); img.src = 'img/tile.png'; img.alt = ''; tile.appendChild(img);
+  const sheen = document.createElement('div'); sheen.className = 'sheen'; tile.appendChild(sheen);
+  const rig = $('rig'), orbit = $('orbit'), r1 = $('r1'), r2 = $('r2');
+  let tX = 0, tY = 0, cX = 0, cY = 0, spin = 0, vs = 0, drag = null;
+  addEventListener('pointermove', e => { tX = (e.clientY / innerHeight - .5) * -26; tY = (e.clientX / innerWidth - .5) * 34; }, { passive: true });
+  orbit.addEventListener('pointerdown', e => { drag = { x: e.clientX, t: performance.now() }; orbit.setPointerCapture(e.pointerId); });
+  orbit.addEventListener('pointermove', e => { if (!drag) return; const now = performance.now(), dx = e.clientX - drag.x; spin += dx * .5; vs = dx * .5 / Math.max(8, now - drag.t) * 16; drag = { x: e.clientX, t: now }; });
+  const endDrag = () => { drag = null; };
+  orbit.addEventListener('pointerup', endDrag); orbit.addEventListener('pointercancel', endDrag);
+
+  /* ---------- 2 · isometric desk ---------- */
+  const svg = $('iso');
+  const P = (X, Y, Z) => [(X - Y) * 0.866, (X + Y) * 0.5 - Z];
+  const pts = a => a.map(p => P(...p).map(n => n.toFixed(1)).join(',')).join(' ');
+  const poly = (a, cls, parent = svg) => mk('polygon', { points: pts(a), class: cls }, parent);
+  const pl = (a, cls, parent = svg) => mk('polyline', { points: pts(a), class: cls }, parent);
+  const face = a => { poly(a, 'fillface'); poly(a, 'hl'); };
+  const box = (x0, y0, z0, x1, y1, z1) => { // visible faces: front-left (y = y1), front-right (x = x1), top
+    face([[x0,y1,z0],[x1,y1,z0],[x1,y1,z1],[x0,y1,z1]]);
+    face([[x1,y0,z0],[x1,y1,z0],[x1,y1,z1],[x1,y0,z1]]);
+    face([[x0,y0,z1],[x1,y0,z1],[x1,y1,z1],[x0,y1,z1]]);
+  };
+  for (let i = -80; i <= 400; i += 40) pl([[i,-240,0],[i,300,0]], 'hl soft');
+  for (let j = -240; j <= 300; j += 40) pl([[-80,j,0],[400,j,0]], 'hl soft');
+  // cable from tablet to monitor (drawn first, lies on the desk)
+  pl([[150,40,3],[140,0,0],[120,-80,0],[175,-160,0]], 'hl soft');
+  // monitor: base, neck, panel facing +y
+  box(120, -200, 0, 230, -130, 4);
+  box(166, -175, 4, 184, -160, 70);
+  const SY = -150, sx0 = -20, sx1 = 370, sz0 = 70, sz1 = 300;
+  box(sx0, SY - 14, sz0, sx1, SY, sz1);
+  const scr = (u, v) => [sx0 + 14 + (sx1 - sx0 - 28) * u, SY, sz1 - 14 - (sz1 - sz0 - 28) * v];
+  poly([scr(0,0), scr(1,0), scr(1,1), scr(0,1)], 'hl blue');
+  pl([scr(0,.07), scr(1,.07)], 'hl soft'); pl([scr(.06,.07), scr(.06,1)], 'hl soft'); pl([scr(.86,.07), scr(.86,1)], 'hl soft');
+  for (let k = 0; k < 6; k++) { const v = .13 + k * .11; poly([scr(.015,v), scr(.045,v), scr(.045,v+.07), scr(.015,v+.07)], 'hl soft'); }
+  for (let k = 0; k < 4; k++) { const v = .13 + k * .1; poly([scr(.875,v), scr(.985,v), scr(.985,v+.075), scr(.875,v+.075)], 'hl soft'); }
+  const screenInk = mk('g', {}, svg);
+  const cursor = mk('circle', { r: 5, class: 'cur', opacity: 0 }, svg);
+  // screenless pen tablet: body, express keys, active area with corner marks
+  const TZ = 9; box(0, 40, 0, 330, 250, TZ);
+  const ax0 = 60, ax1 = 312, ay0 = 62, ay1 = 232;
+  const tab = (u, v) => [ax0 + (ax1 - ax0) * u, ay0 + (ay1 - ay0) * v, TZ];
+  poly([tab(0,0), tab(1,0), tab(1,1), tab(0,1)], 'hl soft');
+  [[0,0],[1,0],[1,1],[0,1]].forEach(([u, v]) => { const c = tab(u, v), du = u ? -12 : 12, dv = v ? -12 : 12;
+    pl([[c[0], c[1] + dv, TZ], c, [c[0] + du, c[1], TZ]], 'hl blue'); });
+  for (let k = 0; k < 4; k++) { const y = 80 + k * 36; poly([[16,y,TZ],[40,y,TZ],[40,y+26,TZ],[16,y+26,TZ]], 'hl'); }
+  const trace = mk('g', {}, svg);
+  const pen = mk('g', {}, svg);
+  const penBody = mk('polygon', { class: 'fillface' }, pen), penLine = mk('polygon', { class: 'hl' }, pen), penGrip = mk('polyline', { class: 'hl blue' }, pen);
+  const tipDot = mk('circle', { r: 3, class: 'tip' }, svg);
+  // pen silhouette reaches above the panel, include its range in the fit
+  const bb = svg.getBBox(), pad = 12;
+  svg.setAttribute('viewBox', [bb.x - pad, bb.y - pad, bb.width + pad * 2, bb.height + pad * 2].map(n => n.toFixed(0)).join(' '));
+
+  let strokes = [], cur = null;
+  const drawPen = (u, v, lift) => {
+    const t = tab(u, v), z = TZ + lift;
+    const a = [t[0], t[1], z], b = [t[0] + 34, t[1] + 44, z + 120], n = [3.5, -3.5];
+    const off = (p, s) => [p[0] + n[0] * s, p[1] + n[1] * s, p[2]];
+    const neck = [a[0] + 6, a[1] + 8, a[2] + 22];
+    const shape = [a, off(neck, 1), off(b, 1.8), off(b, -1.8), off(neck, -1)];
+    const s = pts(shape); penBody.setAttribute('points', s); penLine.setAttribute('points', s);
+    penGrip.setAttribute('points', pts([[a[0]+12,a[1]+16,a[2]+44],[a[0]+16,a[1]+21,a[2]+58]]));
+    const tp = P(...a); tipDot.setAttribute('cx', tp[0]); tipDot.setAttribute('cy', tp[1]); tipDot.setAttribute('opacity', lift < 1 ? 1 : .25);
+    const sp = P(...scr(u, v)); cursor.setAttribute('cx', sp[0]); cursor.setAttribute('cy', sp[1]);
+  };
+  const addPt = (s, u, v, w) => {
+    s.pts.push([u, v]);
+    const n = s.pts.length; if (n < 2) return;
+    const [u0, v0] = s.pts[n - 2];
+    const a = P(...scr(u0, v0)), b = P(...scr(u, v));
+    mk('line', { x1: a[0], y1: a[1], x2: b[0], y2: b[1], class: 'ink', 'stroke-width': (0.8 + 2.8 * w).toFixed(2) }, s.g);
+    const ta = P(...tab(u0, v0)), tb = P(...tab(u, v));
+    mk('line', { x1: ta[0], y1: ta[1], x2: tb[0], y2: tb[1], class: 'trace' }, s.tg);
+  };
+  const newStroke = () => { const s = { pts: [], g: mk('g', {}, screenInk), tg: mk('g', {}, trace) }; strokes.push(s); return s; };
+  const clearAll = () => { strokes.forEach(s => { s.g.remove(); s.tg.remove(); }); strokes = []; };
+
+  // demo: the letters FA and a swash, as (u,v) polylines, resampled
+  const DEMO = [
+    [[.30,.78],[.30,.30],[.44,.26]],
+    [[.30,.52],[.41,.50]],
+    [[.48,.80],[.57,.28],[.66,.80]],
+    [[.51,.62],[.63,.62]],
+    [[.22,.88],[.40,.83],[.60,.90],[.80,.76],[.86,.62]],
+  ].map(line => { const out = []; for (let i = 0; i < line.length - 1; i++) { const a = line[i], b = line[i + 1], n = Math.max(4, Math.round(Math.hypot(b[0]-a[0], b[1]-a[1]) * 90));
+      for (let k = 0; k < n; k++) out.push([a[0] + (b[0]-a[0]) * k / n, a[1] + (b[1]-a[1]) * k / n]); } out.push(line[line.length - 1]); return out; });
+  const DEMO_LEN = DEMO.reduce((s, l) => s + l.length + 14, 0);
+  let demoT = 0, userAt = -1e9, penU = .5, penV = .5, penLift = 30, user = false, hoverIn = false, demoStroke = null, demoIdx = -1;
+  $('clr').addEventListener('click', () => { clearAll(); demoT = 0; demoIdx = -1; userAt = performance.now(); });
+
+  const toTab = e => {
+    const m = svg.getScreenCTM(); if (!m) return null;
+    const p = new DOMPoint(e.clientX, e.clientY).matrixTransform(m.inverse());
+    const a = p.x / 0.866, b = 2 * (p.y + TZ), X = (a + b) / 2, Y = (b - a) / 2;
+    return [(X - ax0) / (ax1 - ax0), (Y - ay0) / (ay1 - ay0)];
+  };
+  const inside = q => q && q[0] >= 0 && q[0] <= 1 && q[1] >= 0 && q[1] <= 1;
+  svg.addEventListener('pointerdown', e => { const q = toTab(e); if (!inside(q)) return;
+    svg.setPointerCapture(e.pointerId); if (demoT) { clearAll(); demoT = 0; demoIdx = -1; } user = true; cur = newStroke(); userAt = performance.now();
+    penU = q[0]; penV = q[1]; penLift = 0; addPt(cur, penU, penV, e.pressure || .5); });
+  svg.addEventListener('pointermove', e => { const q = toTab(e); if (!q) return;
+    hoverIn = inside(q);
+    if (hoverIn || cur) { penU = clamp(q[0]); penV = clamp(q[1]); userAt = performance.now(); }
+    if (cur) addPt(cur, penU, penV, e.pointerType === 'pen' ? e.pressure : .55); });
+  const up = () => { cur = null; user = false; };
+  svg.addEventListener('pointerup', up); svg.addEventListener('pointercancel', up);
+  svg.addEventListener('pointerleave', () => { hoverIn = false; });
+
+  const demoStep = () => { // advance the demo one point; false when the drawing is finished
+    let t = Math.floor(demoT); demoT += 1;
+    for (let li = 0; li < DEMO.length; li++) {
+      const L = DEMO[li];
+      if (t < L.length) { if (demoIdx !== li) { demoIdx = li; demoStroke = newStroke(); }
+        const [u, v] = L[t], w = Math.sin(Math.PI * (t + 1) / (L.length + 1)); penU = u; penV = v; penLift = 0; addPt(demoStroke, u, v, .25 + .75 * w); return true; }
+      t -= L.length;
+      if (t < 14) { penLift = 26 * Math.sin(Math.PI * t / 14);
+        const nx = DEMO[li + 1]; if (nx) { const k = t / 14, a = L[L.length - 1], b = nx[0]; penU = a[0] + (b[0] - a[0]) * k; penV = a[1] + (b[1] - a[1]) * k; } return true; }
+      t -= 14;
+    }
+    return false;
+  };
+  if (reduce) { while (demoStep()); }
+  drawPen(penU, penV, 30);
+
+  /* ---------- 3 · painting ---------- */
+  const SHAPES = [ // the drawing's lines, shared by sketch (doubled, thin) and ink (clean)
+    'M0 400 C 110 330 200 300 300 350 S 470 280 600 340 S 800 380 960 300',
+    'M0 470 C 150 420 280 440 400 480 S 700 410 960 450',
+    'M0 505 L 960 505',
+    'M474 200 A 86 86 0 1 0 646 200 A 86 86 0 1 0 474 200',
+    'M180 170 q 14 -12 28 0 q 14 -12 28 0', 'M250 130 q 10 -9 20 0 q 10 -9 20 0', 'M760 150 q 12 -10 24 0 q 12 -10 24 0',
+    'M80 540 L 180 540', 'M260 560 L 420 560', 'M690 545 L 860 545', 'M500 580 L 640 580',
+  ];
+  const sk = $('cSketch'), ik = $('cInk'), skP = [], inP = [];
+  SHAPES.forEach((d, i) => {
+    [[-3, 2], [2, -2]].forEach(([dx, dy]) => skP.push(mk('path', { d, class: 'sk', transform: 'translate(' + (dx + i % 3) + ' ' + (dy - i % 2) + ')', pathLength: 1, 'stroke-dasharray': 1, 'stroke-dashoffset': 1 }, sk)));
+    inP.push(mk('path', { d, class: 'ln', pathLength: 1, 'stroke-dasharray': 1, 'stroke-dashoffset': 1 }, ik));
+  });
+  const paint = $('paint'), cColor = $('cColor'), cLight = $('cLight'), layers = [...document.querySelectorAll('.layer')], scrubs = [...$('scrub').children];
+  const setPaint = p => {
+    const st = [clamp(p / .25), clamp((p - .25) / .25), clamp((p - .5) / .25), clamp((p - .75) / .25)];
+    skP.forEach((e, i) => e.setAttribute('stroke-dashoffset', 1 - clamp(st[0] * 1.6 - (i / skP.length) * .6)));
+    sk.setAttribute('opacity', 1 - st[2] * .9);
+    inP.forEach((e, i) => e.setAttribute('stroke-dashoffset', 1 - clamp(st[1] * 1.6 - (i / inP.length) * .6)));
+    ik.setAttribute('opacity', 1 - st[3] * .55);
+    cColor.setAttribute('opacity', st[2]); cLight.setAttribute('opacity', st[3]);
+    const stage = Math.min(3, Math.floor(p / .25));
+    layers.forEach(l => { const k = +l.dataset.l; l.classList.toggle('on', st[k] > 0); l.classList.toggle('cur', k === stage && p > 0); });
+    scrubs.forEach((s, i) => { s.style.setProperty('--f', (st[i] * 100) + '%'); s.style.setProperty('--g', st[i]); });
+  };
+  setPaint(reduce ? 1 : 0);
+
+
+  /* 3 · lanyard rail of version badges */
+  const VERS = [
+    { img: 'psd',     v: '1.7',  t: 'حفظ PSD بالطبقات', b: 'حفظ باسم صار يدعم Photoshop PSD بالطبقات والمجموعات والأقنعة وأوضاع المزج، مع PNG و JPEG.', tags: ['PSD', 'طبقات'] },
+    { img: 'brushes', v: '1.8',  t: 'فرش Procreate', b: 'استيراد حقيقي لفرش Procreate و Clip Studio، ومعاينة Procreate الأصلية جنب معاينة FA، وتقرير لكل فرشاة.', tags: ['فرش', 'استيراد'] },
+    { img: 'canvas',  v: '1.9',  t: 'الشاشة الرئيسية', b: 'صفحة رئيسية للمشاريع، قوائم كاملة، إظهار وإخفاء اللوحات، و28 وضع مزج زي Photoshop.', tags: ['واجهة', 'مزج'] },
+    { img: 'home',    v: '1.10', t: 'التدرّج', b: 'تغيير حجم الفرشاة بـ Alt وسحب، أداة تدرّج خطي ودائري بنقاط متعددة، وتصنيف تلقائي للفرش المستوردة.', tags: ['أدوات'] },
+    { img: 'ref',     v: '1.11', t: 'التلوين المرجعي', b: 'تلوين مرجعي و ColorDrop، لوحة مزج ألوان، صور مرجعية مع المشروع، QuickShape، وتسجيل Time-lapse.', tags: ['تلوين', 'Time-lapse'] },
+    { img: 'paint',   v: '1.12', t: 'مائي وزيتي', b: 'ست فرش طبيعية مائية وزيتية، تحديد العنصر، العصا السحرية، و Liquify.', tags: ['فرش طبيعية', 'تحديد'] },
+    { img: 'curves',  v: '1.13', t: 'قائمة «صورة»', b: 'منحنيات ومستويات وتشبع وتمويه بمعاينة حية، وقائمة «لوحة» للحجم والقص والتدوير.', tags: ['تعديل', 'لوحة'] },
+    { img: 'persp',   v: '1.14', t: 'التحويل والمنظور', b: 'أداة التحويل بتشويه ومنظور وإمالة، تعبئة حرة، وتحديد أكثر من طبقة مع بعض.', tags: ['تحويل', 'طبقات'] },
+    { img: 'face',    v: '1.15β', t: 'الذكاء والوجه', b: 'تحديد العنصر بالذكاء بنقرة، Liquify حسب الوجه، شريط آخر الفرش، وعجلة ألوان سريعة.', tags: ['ذكاء', 'Liquify'] },
+    { img: 'tablet',  v: '1.15.2', t: 'هوية جديدة', b: 'أيقونة FA جديدة، تبويبات للملفات المفتوحة، وتمرين الوضعيات بوقت.', tags: ['أيقونة', 'تبويبات'] },
+  ];
+  /* one small line drawing per version, matching its notes */
+  const H = 'rgba(232,238,242,.55)', B = '#5cc8e0';
+  const ART = {
+    '1.7': `<rect x="44" y="50" width="72" height="46" rx="6" fill="#161d22" stroke="${H}"/><rect x="36" y="40" width="72" height="46" rx="6" fill="#18242b" stroke="${H}"/><rect x="28" y="30" width="72" height="46" rx="6" fill="rgba(92,200,224,.16)" stroke="${B}"/><path d="M40 62 q14 -18 28 -4 t24 -8" fill="none" stroke="${B}" stroke-width="2.4" stroke-linecap="round"/><rect x="104" y="14" width="42" height="18" rx="9" fill="${B}"/><text x="125" y="27" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="10" font-weight="700" fill="#061015">PSD</text>`,
+    '1.8': `<path d="M18 34 C 50 22 80 44 116 30" fill="none" stroke="${B}" stroke-width="7" stroke-linecap="round"/><path d="M18 58 C 52 50 78 66 116 54" fill="none" stroke="#bff0fb" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 5"/><path d="M18 82 C 46 74 84 90 116 78" fill="none" stroke="${H}" stroke-width="10" stroke-linecap="round" opacity=".7"/><path d="M138 24 v44 m-10 -10 l10 10 l10 -10" fill="none" stroke="${B}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="124" y="76" width="28" height="20" rx="4" fill="none" stroke="${H}"/><text x="138" y="90" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="${H}">.brush</text>`,
+    '1.9': `<rect x="16" y="14" width="128" height="14" rx="4" fill="none" stroke="${H}"/><circle cx="24" cy="21" r="2.5" fill="${B}"/>` + [0,1,2].map(c => [0,1].map(r => (c === 0 && r === 0) ? `<rect x="${18+c*42}" y="${36+r*38}" width="36" height="32" rx="5" fill="rgba(92,200,224,.14)" stroke="${B}"/><path d="M${36+c*42} ${45+r*38} v14 m-7 -7 h14" stroke="${B}" stroke-width="2" stroke-linecap="round"/>` : `<rect x="${18+c*42}" y="${36+r*38}" width="36" height="32" rx="5" fill="#161d22" stroke="${H}"/><path d="M${24+c*42} ${60+r*38} q8 -12 14 -4 t12 -6" fill="none" stroke="${H}" stroke-width="1.4"/>`).join('')).join(''),
+    '1.10': `<defs><linearGradient id="gd" x1="0" x2="1"><stop offset="0" stop-color="#5cc8e0"/><stop offset=".55" stop-color="#2c6b7a"/><stop offset="1" stop-color="#5cc8e0" stop-opacity="0"/></linearGradient></defs><rect x="14" y="22" width="132" height="34" rx="6" fill="url(#gd)" stroke="${H}"/><line x1="18" y1="68" x2="142" y2="68" stroke="${H}"/>${[18,90,142].map(x => `<circle cx="${x}" cy="68" r="5" fill="#0f1418" stroke="${B}" stroke-width="2"/>`).join('')}<circle cx="60" cy="96" r="12" fill="none" stroke="${H}" stroke-dasharray="3 3"/><circle cx="60" cy="96" r="5" fill="${B}"/><path d="M84 96 h40 m-6 -5 l6 5 l-6 5 M84 96 l6 -5 m-6 5 l6 5" fill="none" stroke="${B}" stroke-width="1.6" stroke-linecap="round"/><text x="104" y="88" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="${H}">ALT</text>`,
+    '1.11': `<g fill="none" stroke="#e8eef2" stroke-width="1.6" stroke-linejoin="round"><path d="M64 60 C 50 34 74 20 80 44 C 86 20 110 34 96 60 C 120 54 122 82 96 76 C 106 100 80 104 80 84 C 74 104 50 100 64 76 C 38 82 40 54 64 60 Z"/><circle cx="80" cy="64" r="8"/></g><path d="M64 60 C 50 34 74 20 80 44 C 77 50 72 56 72 58 Z" fill="${B}" opacity=".85"/><path d="M118 22 c 0 0 -9 10 -9 16 a 9 9 0 0 0 18 0 c 0 -6 -9 -16 -9 -16z" fill="${B}"/><path d="M114 42 q -14 8 -30 8" fill="none" stroke="${B}" stroke-width="1.4" stroke-dasharray="2 3"/>`,
+    '1.12': `<defs><filter id="wc"><feGaussianBlur stdDeviation="2.4"/></filter></defs><g filter="url(#wc)" opacity=".85"><circle cx="48" cy="52" r="24" fill="#5cc8e0" opacity=".45"/><circle cx="60" cy="64" r="18" fill="#2f8fd8" opacity=".45"/><circle cx="40" cy="68" r="14" fill="#bff0fb" opacity=".35"/></g><path d="M92 36 C 112 30 130 44 138 60" fill="none" stroke="#2f8fd8" stroke-width="16" stroke-linecap="round"/><path d="M92 36 C 112 30 130 44 138 60" fill="none" stroke="#9adfee" stroke-width="3" stroke-linecap="round" stroke-dasharray="6 7" opacity=".9"/><path d="M96 72 C 114 70 126 80 134 92" fill="none" stroke="#e8eef2" stroke-width="10" stroke-linecap="round" opacity=".75"/><text x="50" y="104" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="${H}">WATER</text><text x="116" y="108" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="${H}">OIL</text>`,
+    '1.13': `<rect x="30" y="12" width="100" height="96" rx="4" fill="#121a1f" stroke="${H}"/>${[1,2,3].map(k => `<line x1="${30+k*25}" y1="12" x2="${30+k*25}" y2="108" stroke="rgba(232,238,242,.1)"/><line x1="30" y1="${12+k*24}" x2="130" y2="${12+k*24}" stroke="rgba(232,238,242,.1)"/>`).join('')}${[8,14,22,30,26,18,24,34,40,30,20,12].map((h, i) => `<rect x="${33+i*8}" y="${108-h}" width="6" height="${h}" fill="rgba(232,238,242,.12)"/>`).join('')}<line x1="30" y1="108" x2="130" y2="12" stroke="rgba(232,238,242,.25)" stroke-dasharray="3 3"/><path d="M30 108 C 62 104 60 70 80 60 S 104 18 130 12" fill="none" stroke="${B}" stroke-width="2.4"/><circle cx="62" cy="88" r="4" fill="#0f1418" stroke="${B}" stroke-width="2"/><circle cx="100" cy="34" r="4" fill="#0f1418" stroke="${B}" stroke-width="2"/>`,
+    '1.14': `<rect x="40" y="26" width="80" height="64" fill="none" stroke="${H}" stroke-dasharray="3 3"/><path d="M28 98 L 50 22 L 112 30 L 136 92 Z" fill="rgba(92,200,224,.12)" stroke="${B}" stroke-width="1.8"/><path d="M50 22 L 136 92 M112 30 L 28 98" stroke="rgba(92,200,224,.3)"/>${[[28,98],[50,22],[112,30],[136,92]].map(([x,y]) => `<rect x="${x-4}" y="${y-4}" width="8" height="8" fill="#0f1418" stroke="${B}" stroke-width="1.8"/>`).join('')}`,
+    '1.15β': `<g fill="none" stroke="#e8eef2" stroke-width="1.6" stroke-linecap="round"><path d="M60 22 C 36 24 34 64 46 84 C 54 98 70 100 80 88 C 90 74 92 30 60 22 Z"/><path d="M48 50 q6 -4 12 0 M66 50 q6 -4 12 0"/><path d="M62 54 l-3 14 h7"/><path d="M54 78 q10 6 18 0"/></g><rect x="28" y="14" width="66" height="94" rx="10" fill="none" stroke="${B}" stroke-width="1.6" stroke-dasharray="5 4"><animate attributeName="stroke-dashoffset" from="0" to="-18" dur="1s" repeatCount="indefinite"/></rect>${[30,52,74].map((y, i) => `<line x1="106" y1="${y}" x2="146" y2="${y}" stroke="${H}" stroke-linecap="round"/><circle cx="${116+i*12}" cy="${y}" r="4.5" fill="${B}"/>`).join('')}<text x="126" y="96" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="7" fill="${H}">AI</text>`,
+  };
+  const TONES = ['#5cc8e0', '#3b8fa3', '#7fd6e8', '#2c6b7a', '#9adfee'];
+  const rail = $('rail'), cap = $('cap'), CAP0 = cap.textContent;
+  const lans = VERS.map((d, i) => {
+    const lan = document.createElement('div');
+    lan.className = 'lan';
+    lan.style.setProperty('--tone', TONES[i % TONES.length]);
+    lan.innerHTML =
+      '<div class="swing"><div class="ribbon"></div><div class="clip"></div>' +
+      '<button class="badge" type="button" aria-pressed="false"><div class="inner">' +
+        '<div class="face front"><div class="band"><i></i></div><div class="pic"><img alt="" loading="lazy"></div>' +
+          '<div class="meta"><div class="ver"></div><div class="tt"></div><div class="hint">TAP TO FLIP</div></div></div>' +
+        '<div class="face back"><div class="band"><i></i></div><div class="meta"><div class="ver"></div><div class="txt"></div><div class="tags"></div></div></div>' +
+      '</div></button></div>';
+    const pic = lan.querySelector('.pic');
+    if (ART[d.v]) pic.innerHTML = '<svg viewBox="0 0 160 120" width="100%" height="100%" role="img" aria-hidden="true" style="display:block;background:#0f1418">' + ART[d.v] + '</svg>';
+    else lan.querySelector('img').src = 'img/' + d.img + '.jpg';
+    lan.style.setProperty('--sd', (i * 0.45).toFixed(2) + 's');
+    lan.querySelectorAll('.ver').forEach(e => { e.textContent = d.v; });
+    lan.querySelector('.tt').textContent = d.t;
+    lan.querySelector('.txt').textContent = d.b;
+    const tg = lan.querySelector('.tags');
+    d.tags.forEach(x => { const s = document.createElement('span'); s.textContent = x; tg.appendChild(s); });
+    const btn = lan.querySelector('.badge');
+    btn.setAttribute('aria-label', 'نسخة ' + d.v + ': ' + d.t);
+    rail.appendChild(lan);
+    return { lan, sw: lan.querySelector('.swing'), btn, th: (i % 2 ? -1 : 1) * 0.06, w: 0, x: 0 };
+  });
+  let flipped = -1;
+  lans.forEach((o, i) => o.btn.addEventListener('click', () => {
+    flipped = flipped === i ? -1 : i;
+    lans.forEach((q, k) => { q.btn.classList.toggle('flipped', k === flipped); q.btn.setAttribute('aria-pressed', String(k === flipped)); q.lan.style.zIndex = k === flipped ? 20 : ''; });
+    o.w += 0.9 * (i % 2 ? -1 : 1);
+    cap.textContent = flipped < 0 ? CAP0 : 'نسخة ' + VERS[i].v + ': ' + VERS[i].t;
+  }));
+  const layoutRail = () => {
+    const narrow = innerWidth <= 760, rw = rail.clientWidth, n = lans.length;
+    const bw = narrow ? 168 : Math.min(150, Math.max(112, rw / n * 1.25)), bh = bw * 106 / 62;
+    if (!narrow) rail.style.height = (3 + 84 + bh + 46 + 14 + bh + 30) + 'px'; else rail.style.height = '';
+    lans.forEach((o, i) => {
+      o.lan.style.setProperty('--w', bw + 'px');
+      if (narrow) { o.lan.style.left = ''; o.lan.style.removeProperty('--len'); o.x = 0; return; }
+      const x = rw * (0.06 + 0.88 * (i + 0.5) / n);
+      o.lan.style.left = x + 'px'; o.x = x;
+      o.lan.style.setProperty('--len', (i % 2 ? 84 + bh + 46 : 70 + (i % 4) * 7) + 'px');
+    });
+  };
+  let lastX = null, lastT = 0;
+  rail.addEventListener('pointermove', e => {
+    const r = rail.getBoundingClientRect(), x = e.clientX - r.left, now = performance.now();
+    if (lastX !== null) {
+      const vx = (x - lastX) / Math.max(8, now - lastT);
+      lans.forEach(o => { const d = Math.abs(o.x - x); if (d < 90) o.w += vx * 0.06 * (1 - d / 90); });
+    }
+    lastX = x; lastT = now;
+  });
+  rail.addEventListener('pointerleave', () => { lastX = null; });
+
+  layoutRail(); addEventListener('resize', layoutRail);
+  /* ---------- 4 · feature ring ---------- */
+  (() => {
+    const X = {
+      blend: `<circle cx="66" cy="54" r="30" fill="#5cc8e0" opacity=".75"/><circle cx="94" cy="54" r="30" fill="#2f5fd8" opacity=".75" style="mix-blend-mode:screen"/><circle cx="80" cy="76" r="30" fill="#bff0fb" opacity=".45" style="mix-blend-mode:screen"/><text x="80" y="114" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="${H}">28 MODES</text>`,
+      timelapse: `<rect x="18" y="30" width="96" height="60" rx="6" fill="#121a1f" stroke="${H}"/>${[0,1,2,3,4,5].map(k => `<rect x="${24+k*15}" y="34" width="8" height="5" rx="1" fill="${H}"/><rect x="${24+k*15}" y="81" width="8" height="5" rx="1" fill="${H}"/>`).join('')}<path d="M40 70 q12 -26 26 -10 t26 -12" fill="none" stroke="${B}" stroke-width="2.4" stroke-linecap="round"/><circle cx="130" cy="60" r="18" fill="none" stroke="${B}" stroke-width="2"/><path d="M125 52 l12 8 l-12 8 z" fill="${B}"/>`,
+      gestures: `<circle cx="64" cy="58" r="9" fill="${B}"/><circle cx="90" cy="52" r="9" fill="${B}"/><circle cx="64" cy="58" r="17" fill="none" stroke="${B}" opacity=".45"/><circle cx="90" cy="52" r="17" fill="none" stroke="${B}" opacity=".45"/><path d="M52 92 a 30 30 0 0 0 52 -4" fill="none" stroke="${H}" stroke-width="1.8" stroke-linecap="round"/><path d="M98 82 l6 6 l-8 3" fill="none" stroke="${H}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><text x="80" y="112" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="8" fill="${H}">UNDO</text>`,
+      learn: `<path d="M80 34 C 64 26 40 26 26 32 V 92 C 40 86 64 86 80 94 Z" fill="#121a1f" stroke="${H}"/><path d="M80 34 C 96 26 120 26 134 32 V 92 C 120 86 96 86 80 94 Z" fill="#121a1f" stroke="${H}"/><path d="M36 70 q10 -16 20 -6 t18 -8" fill="none" stroke="${B}" stroke-width="2" stroke-linecap="round"/><circle cx="108" cy="58" r="12" fill="none" stroke="${B}" stroke-width="1.6"/><path d="M96 70 h24" stroke="${H}" stroke-dasharray="3 3"/>`,
+    };
+    const RING = [
+      { a: '1.7', t: 'PSD بالطبقات', d: 'بتفتح ملفات Photoshop وبتحفظها بطبقاتها ومجموعاتها وأقنعتها.' },
+      { a: '1.8', t: 'فرش Procreate و Clip Studio', d: 'افتح فرشك من البرامج التانية وارسم فيها، مع تقرير لكل فرشاة.' },
+      { x: 'blend', t: '28 وضع مزج', d: 'أوضاع مزج الطبقات كلها متل Photoshop.' },
+      { a: '1.12', t: 'مائي وزيتي', d: 'فرش طبيعية، وفرش دمج بتخلط الألوان متل الطلاء الحقيقي.' },
+      { a: '1.13', t: 'منحنيات ومستويات', d: 'قائمة «صورة» كاملة بمعاينة حية على اللوحة.' },
+      { a: '1.14', t: 'تحويل ومنظور', d: 'تشويه ومنظور وإمالة، على طبقة وحدة أو كذا طبقة.' },
+      { a: '1.15β', t: 'تحديد بالذكاء و Liquify', d: 'تحديد العنصر بنقرة، وتعديل العيون والأنف والفم بسلايدرات.' },
+      { x: 'timelapse', t: 'Time-lapse', d: 'سجّل رسمتك وهي عم تنبني، وطلّعها فيديو.' },
+      { x: 'gestures', t: 'إيماءات التابلت', d: 'إصبعين تراجع، تلاتة إعادة، وزر S Pen بيبدّل للممحاة.' },
+      { x: 'learn', t: 'تعلّم الرسم', d: 'دروس جوّا البرنامج، من الخط الأول لحد الضو والظل.' },
+    ];
+    const box = $('ring3d'), cyl = $('cyl'), capT = $('rcT'), capD = $('rcD');
+    const N = RING.length, STEP = 360 / N;
+    let ang = 0, target = null, R = 300, drag = null, moved = false, hover = false, front = -1;
+    const norm = a => ((a % 360) + 540) % 360 - 180;
+    const goTo = i => { target = ang + norm(-i * STEP - ang); };
+    const cards = RING.map((r, i) => {
+      const el = document.createElement('div'); el.className = 'rc';
+      el.innerHTML = '<svg viewBox="0 0 160 120" aria-hidden="true">' + (r.x ? X[r.x] : ART[r.a]) + '</svg><span></span><b></b>';
+      el.querySelector('b').textContent = r.t; el.querySelector('span').textContent = String(i + 1).padStart(2, '0');
+      el.addEventListener('click', () => { if (!moved) goTo(i); });
+      cyl.appendChild(el); return el;
+    });
+    const size = () => {
+      const m = innerWidth < 760, cw = m ? 150 : 196, ch = Math.round(cw * 1.32);
+      box.style.setProperty('--cw', cw + 'px'); box.style.setProperty('--ch', ch + 'px');
+      R = Math.round(cw / 2 / Math.tan(Math.PI / N) + (m ? 14 : 26));
+      cards.forEach((c, i) => { c.style.transform = 'rotateY(' + (i * STEP) + 'deg) translateZ(' + R + 'px)'; });
+    };
+    size(); addEventListener('resize', size);
+    box.addEventListener('pointerdown', e => { drag = { x: e.clientX }; moved = false; target = null; });
+    box.addEventListener('pointermove', e => { if (!drag) return; const dx = e.clientX - drag.x; if (Math.abs(dx) > 3) moved = true; ang += dx * .28; drag.x = e.clientX; paint(); });
+    const end = () => { if (!drag) return; drag = null; if (moved) goTo(Math.round(((-ang / STEP) % N + N) % N) % N); };
+    box.addEventListener('pointerup', end); box.addEventListener('pointercancel', end); box.addEventListener('pointerleave', () => { end(); hover = false; });
+    box.addEventListener('pointerenter', () => { hover = true; });
+    box.addEventListener('keydown', e => { const k = { ArrowLeft: 1, ArrowRight: -1 }[e.key]; if (!k) return; e.preventDefault(); goTo(((front < 0 ? 0 : front) + k + N) % N); });
+    function paint() {
+      cyl.style.transform = 'translateZ(' + (-R) + 'px) rotateX(-9deg) rotateY(' + ang + 'deg)';
+      let best = 0, bd = 999;
+      cards.forEach((c, i) => { const rel = norm(i * STEP + ang), cs = Math.max(0, Math.cos(rel * Math.PI / 180));
+        c.style.opacity = (0.18 + 0.82 * Math.pow(cs, 1.4)).toFixed(3); c.style.filter = 'brightness(' + (0.55 + 0.45 * cs).toFixed(3) + ')';
+        if (Math.abs(rel) < bd) { bd = Math.abs(rel); best = i; } });
+      if (best !== front) { if (front >= 0) cards[front].classList.remove('front'); front = best; cards[best].classList.add('front'); capT.textContent = RING[best].t; capD.textContent = RING[best].d; }
+    }
+    let last = performance.now();
+    const tick = now => {
+      const dt = Math.min(.05, (now - last) / 1000); last = now;
+      if (!drag) {
+        if (target != null) { ang += (target - ang) * Math.min(1, dt * 7); if (Math.abs(target - ang) < .05) { ang = target; target = null; } }
+        else if (!hover && !reduce) ang -= dt * 9;
+      }
+      paint(); requestAnimationFrame(tick);
+    };
+    paint(); requestAnimationFrame(tick);
+  })();
+  const device = $('device'), pin = $('pin');
+
+  /* ---------- one loop ---------- */
+  let prev = performance.now(), acc = 0;
+  function frame(now) {
+    const dt = Math.min(0.05, (now - prev) / 1000); prev = now;
+    // 1
+    cX += (tX - cX) * .06; cY += (tY - cY) * .06;
+    if (!drag) { vs *= .95; spin += vs + 0.12; }
+    rig.style.transform = 'rotateX(' + cX + 'deg) rotateY(' + (cY + spin * .25) + 'deg)';
+    r1.style.transform = 'rotateX(68deg) rotateY(-14deg) rotateZ(' + spin + 'deg)';
+    r2.style.transform = 'rotateY(52deg) rotateX(-38deg) rotateZ(' + (-spin * 1.3) + 'deg)';
+    sheen.style.setProperty('--sa', (115 + cY * 2 + spin * .1) + 'deg');
+    // 2
+    if (!user && now - userAt > 2600 && !hoverIn) {
+      acc += dt * 60;
+      while (acc >= 1) { acc -= 1; if (!demoStep()) { demoT += 1; penLift = Math.min(30, penLift + 1); if (demoT > DEMO_LEN + 110) { clearAll(); demoT = 0; demoIdx = -1; } } }
+    } else if (!user) { penLift += (12 - penLift) * .2; }
+    drawPen(penU, penV, penLift);
+    cursor.setAttribute('opacity', 1);
+    // badges swing + tablet tilt
+    lans.forEach(o => {
+      o.w += (-28 * o.th - 2.2 * o.w) * dt;
+      o.th = Math.max(-0.6, Math.min(0.6, o.th + o.w * dt));
+      o.sw.style.transform = 'rotate(' + o.th + 'rad)';
+    });
+    const dr = device.getBoundingClientRect(), mob = innerWidth < 768, k = clamp(-dr.top / Math.max(1, dr.height - innerHeight) * 1.6);
+    pin.style.setProperty('--rx', (20 * (1 - k)) + 'deg');
+    pin.style.setProperty('--sc', mob ? 0.94 + 0.06 * k : 1.04 - 0.04 * k);
+    pin.style.setProperty('--hy', (-14 * k) + 'px');
+    // 3
+    const r = paint.getBoundingClientRect(); setPaint(clamp((-r.top) / Math.max(1, r.height - innerHeight) * 1.1));
+    requestAnimationFrame(frame);
+  }
+  if (reduce) { rig.style.transform = 'rotateX(-8deg) rotateY(-18deg)'; r1.style.transform = 'rotateX(68deg) rotateY(-14deg)'; r2.style.transform = 'rotateY(52deg) rotateX(-38deg)'; }
+  else requestAnimationFrame(frame);
+})();
+</script>
+<script>
+(() => {
+  /* 21st · Foundation Primitives by kedhareswer, ported to plain JS. The shapes are FA's tools as signed distance fields. */
+  const TOOLS = [
+    { n: 'الفرشاة', d: 'فرش طبيعية مائية وزيتية، فرش دمج، واستيراد فرش Procreate و Clip Studio.', k: 4, c: ['#2f8fd8', '#c4e9f7'], tile: 'disc' },
+    { n: 'الممحاة', d: 'صحّح وإنت بترسم، بالقلم أو بالماوس أو باللمس.', k: 5, c: ['#5cc8e0', '#e2f7fc'], tile: 'square' },
+    { n: 'الطبقات', d: 'طبقات ومجموعات وأقنعة و28 وضع مزج، وبتطلع لـ PSD متل ما هي.', k: 2, c: ['#3b7fe0', '#d3e3fb'], tile: 'square' },
+    { n: 'التلوين', d: 'تلوين مرجعي و ColorDrop، ولوحة لمزج الألوان.', k: 3, c: ['#16a6c8', '#cdf1f9'], tile: 'square' },
+    { n: 'الألوان', d: 'عجلة ألوان سريعة، ولون جاهز تحت إيدك.', k: 0, c: ['#5cc8e0', '#eefcff'], tile: 'none' },
+    { n: 'التعديلات', d: 'منحنيات ومستويات وتشبّع، بمعاينة حية على اللوحة.', k: 1, c: ['#2f8fd8', '#f4fdff'], tile: 'disc' },
+  ];
+  const stage = document.getElementById('prim'), canvas = stage.querySelector('canvas');
+  const capN = document.getElementById('tcN'), capD = document.getElementById('tcD');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const N = TOOLS.length, SPACING = 2.75, MARGIN = 1.75, ROW_GAP = 2.9, CAM_D = 18;
+  const clamp = (v, lo, hi) => Math.min(Math.max(v, lo), hi);
+  const hex = h => { const v = parseInt(h.slice(1), 16); return [(v >> 16 & 255) / 255, (v >> 8 & 255) / 255, (v & 255) / 255]; };
+  let selected = null, hovered = null;
+  const showCap = i => { const t = TOOLS[i == null ? 0 : i]; capN.textContent = t.n; capD.textContent = t.d; };
+  showCap(null);
+
+  const layoutStage = aspect => {
+    const rows = aspect < 1.9 ? 2 : 1, pts = [];
+    if (rows === 1) for (let i = 0; i < N; i++) pts.push([(i - (N - 1) / 2) * SPACING, 0]);
+    else { const top = Math.ceil(N / 2), bot = N - top;
+      for (let i = 0; i < top; i++) pts.push([(i - (top - 1) / 2) * SPACING, ROW_GAP / 2]);
+      for (let i = 0; i < bot; i++) pts.push([(i - (bot - 1) / 2) * SPACING, -ROW_GAP / 2]); }
+    let hw = MARGIN, hh = MARGIN; for (const [x, y] of pts) { hw = Math.max(hw, Math.abs(x) + MARGIN); hh = Math.max(hh, Math.abs(y) + MARGIN); }
+    return { rows, pts: pts.map(([x, y]) => [-x, y]), fit: Math.max(hh, hw / Math.max(aspect, .2)) }; // mirrored: first tool on the right (RTL)
+  };
+  const stripsFor = pts => { const out = []; let run = null;
+    for (let i = 0; i < pts.length; i++) { const sq = TOOLS[i].tile === 'square', [x, y] = pts[i];
+      if (sq && run && run[2] === y) { run[0] = Math.min(run[0], x - 1.12); run[1] = Math.max(run[1], x + 1.12); continue; }
+      if (run) out.push(run); run = sq ? [x - 1.12, x + 1.12, y] : null; }
+    if (run) out.push(run); return out.slice(0, 4); };
+  const rotation = (yaw, pitch, roll, out, at) => {
+    const cy = Math.cos(yaw), sy = Math.sin(yaw), cp = Math.cos(pitch), sp = Math.sin(pitch), cr = Math.cos(roll), sr = Math.sin(roll);
+    const a = [cy, 0, -sy, sy * sp, cp, cy * sp, sy * cp, -sp, cy * cp];
+    for (let c = 0; c < 3; c++) { const x = a[c * 3], y = a[c * 3 + 1], z = a[c * 3 + 2]; out[at + c * 3] = cr * x - sr * y; out[at + c * 3 + 1] = sr * x + cr * y; out[at + c * 3 + 2] = z; }
+  };
+  const makeCamera = (yaw, pitch, fit) => {
+    const back = [Math.sin(yaw) * Math.cos(pitch), Math.sin(pitch), Math.cos(yaw) * Math.cos(pitch)], eye = back.map(v => v * CAM_D);
+    const rx = back[2], rz = -back[0], rl = Math.hypot(rx, rz) || 1, right = [rx / rl, 0, rz / rl];
+    const up = [back[1] * right[2] - back[2] * right[1], back[2] * right[0] - back[0] * right[2], back[0] * right[1] - back[1] * right[0]];
+    return { eye, right, up, back, fov: fit / CAM_D };
+  };
+  const project = (cam, p, w, h) => { const v = [p[0] - cam.eye[0], p[1] - cam.eye[1], p[2] - cam.eye[2]];
+    const x = v[0] * cam.right[0] + v[1] * cam.right[1] + v[2] * cam.right[2], y = v[0] * cam.up[0] + v[1] * cam.up[1] + v[2] * cam.up[2];
+    const z = -(v[0] * cam.back[0] + v[1] * cam.back[1] + v[2] * cam.back[2]), k = h / 2 / (Math.max(z, 1e-3) * cam.fov);
+    return [w / 2 + x * k, h / 2 - y * k, k]; };
+  const unproject = (cam, px, py, w, h, pz) => { const u = (px - w / 2) / (h / 2) * cam.fov, v = (h / 2 - py) / (h / 2) * cam.fov;
+    const d = [0, 1, 2].map(c => cam.right[c] * u + cam.up[c] * v - cam.back[c]), t = (pz - cam.eye[2]) / (Math.abs(d[2]) < 1e-6 ? -1e-6 : d[2]);
+    return [cam.eye[0] + d[0] * t, cam.eye[1] + d[1] * t]; };
+
+  const gl = canvas.getContext('webgl2', { premultipliedAlpha: true, alpha: true, antialias: false });
+  const flat = () => { canvas.remove(); const f = document.createElement('div'); f.className = 'flat';
+    TOOLS.forEach(t => { const i = document.createElement('i'); i.style.background = 'radial-gradient(circle at 42% 40%, ' + t.c[0] + ' 0%, ' + t.c[0] + ' 35%, ' + t.c[1] + ' 100%)'; f.appendChild(i); });
+    stage.appendChild(f); };
+  if (!gl) { flat(); return; }
+
+  const VERT = `#version 300 es
+void main() { vec2 p = vec2(float((gl_VertexID << 1) & 2), float(gl_VertexID & 2)); gl_Position = vec4(p * 2.0 - 1.0, 0.0, 1.0); }`;
+  const FRAG = `#version 300 es
+precision highp float;
+out vec4 outColor;
+uniform vec2 uRes; uniform int uCount;
+uniform vec4 uPos[6]; uniform mat3 uRot[6]; uniform vec4 uInfo[6]; uniform vec3 uSquash[6]; uniform vec3 uCore[6]; uniform vec3 uRim[6];
+uniform vec4 uStrip[4]; uniform int uStripCount; uniform vec3 uDisc[6]; uniform int uDiscCount;
+uniform vec3 uEye; uniform vec3 uRight; uniform vec3 uUp; uniform vec3 uBack; uniform float uFov;
+uniform vec3 uLight; uniform vec4 uLens; uniform vec3 uFg; uniform float uShadow; uniform float uGlow;
+const float PLANE_Z = -1.32; const float TILE_Z = -1.24; const float LENS_Z = 1.9;
+float smin(float a, float b, float k) { float h = clamp(0.5 + 0.5 * (b - a) / k, 0.0, 1.0); return mix(b, a, h) - k * h * (1.0 - h); }
+float sdBox(vec3 p, vec3 b, float r) { vec3 q = abs(p) - b + r; return length(max(q, 0.0)) + min(max(q.x, max(q.y, q.z)), 0.0) - r; }
+mat2 rot2(float a) { float c = cos(a), s = sin(a); return mat2(c, -s, s, c); }
+float sdRoundCone(vec3 p, float r1, float r2, float h) {
+  float b = (r1 - r2) / h; float a = sqrt(1.0 - b * b); vec2 q = vec2(length(p.xz), p.y); float k = dot(q, vec2(-b, a));
+  if (k < 0.0) return length(q) - r1; if (k > a * h) return length(q - vec2(0.0, h)) - r2; return dot(q, vec2(a, b)) - r1; }
+vec3 layerFrame(vec3 q) { q.yz = rot2(0.95) * q.yz; q.xz = rot2(0.785) * q.xz; return q; }
+float layerY(int k, float spread) { return (float(k) - 1.0) * 0.4 * spread; }
+vec3 brushFrame(vec3 q) { q.xy = rot2(-0.62) * q.xy; return q; }
+vec3 eraserFrame(vec3 q) { q.xy = rot2(0.35) * q.xy; return q; }
+// kinds: 0 colour orb, 1 adjustments (half-tone disc), 2 layers, 3 drop, 4 brush, 5 eraser
+vec2 shapeDist(int kind, vec3 q, float spread, int skipSub) {
+  if (kind == 1) { vec2 w = vec2(length(q.xy) - 0.82, abs(q.z) - 0.16); return vec2(min(max(w.x, w.y), 0.0) + length(max(w, 0.0)) - 0.14, 0.0); }
+  if (kind == 2) { vec3 l = layerFrame(q); float d = 1e9; float sub = 0.0;
+    for (int k = 0; k < 3; k++) { if (k == skipSub) continue; float h = sdBox(l - vec3(0.0, layerY(k, spread), 0.0), vec3(0.8, 0.075, 0.8), 0.07); if (h < d) { d = h; sub = float(k); } }
+    return vec2(d, sub); }
+  if (kind == 3) return vec2(sdRoundCone(q + vec3(0.0, 0.5, 0.0), 0.7, 0.04, 1.45), 0.0);
+  if (kind == 4) { vec3 b = brushFrame(q);
+    vec3 h = b; h.y -= clamp(h.y, -1.2, 0.05); float dh = length(h) - 0.16;
+    vec2 d2 = vec2(length(b.xz) - 0.22, abs(b.y - 0.24) - 0.17); float df = min(max(d2.x, d2.y), 0.0) + length(max(d2, 0.0)) - 0.03;
+    float db = sdRoundCone(b - vec3(0.0, 0.42, 0.0), 0.3, 0.02, 0.85);
+    return vec2(smin(smin(dh, df, 0.06), db, 0.07), 0.0); }
+  if (kind == 5) return vec2(sdBox(eraserFrame(q), vec3(1.0, 0.46, 0.42), 0.16), 0.0);
+  return vec2(length(q) - 1.0, 0.0);
+}
+float tileDist2(vec2 p) { float d = 1e9;
+  for (int i = 0; i < 4; i++) { if (i >= uStripCount) break; vec4 s = uStrip[i]; vec2 c = vec2((s.x + s.y) * 0.5, s.z); vec2 b = vec2((s.y - s.x) * 0.5, 1.04);
+    vec2 q = abs(p - c) - b + 0.34; d = min(d, length(max(q, 0.0)) + min(max(q.x, q.y), 0.0) - 0.34); }
+  for (int i = 0; i < 6; i++) { if (i >= uDiscCount) break; d = min(d, length(p - uDisc[i].xy) - uDisc[i].z); }
+  return d; }
+vec2 map(vec3 p, int skip) { vec2 res = vec2(1e9, -1.0);
+  for (int i = 0; i < 6; i++) { if (i >= uCount) break; vec3 q = p - uPos[i].xyz; float s = uPos[i].w; float bound = length(q) - 1.9 * s;
+    if (bound > 0.35) { if (bound < res.x) res = vec2(bound, float(i * 4)); continue; }
+    int kind = int(uInfo[i].x + 0.5); int skipSub = -1;
+    if (skip >= 0 && skip / 4 == i) { if (kind != 2) continue; skipSub = skip - i * 4; }
+    vec3 sq = uSquash[i]; vec3 lq = (transpose(uRot[i]) * q) / (s * sq); vec2 h = shapeDist(kind, lq, uInfo[i].w, skipSub);
+    float d = h.x * s * min(sq.x, min(sq.y, sq.z)); if (d < res.x) res = vec2(d, float(i * 4) + h.y); }
+  return res; }
+vec3 calcNormal(vec3 p, int skip) { const vec2 e = vec2(1.0, -1.0) * 0.0015;
+  return normalize(e.xyy * map(p + e.xyy, skip).x + e.yyx * map(p + e.yyx, skip).x + e.yxy * map(p + e.yxy, skip).x + e.xxx * map(p + e.xxx, skip).x); }
+float sphShadow(vec3 ro, vec3 rd, vec4 sph) { vec3 oc = ro - sph.xyz; float b = dot(oc, rd); float c = dot(oc, oc) - sph.w * sph.w; float h = b * b - c;
+  float d = sqrt(max(0.0, sph.w * sph.w - h)) - sph.w; float t = -b - sqrt(max(h, 0.0)); return t < 0.0 ? 1.0 : smoothstep(0.0, 1.0, 1.6 * d / t); }
+float softShadow(vec3 ro, vec3 rd, int self) { float res = 1.0;
+  for (int i = 0; i < 6; i++) { if (i >= uCount) break; if (i == self) continue; res = min(res, sphShadow(ro, rd, vec4(uPos[i].xyz, 0.92 * uPos[i].w))); } return res; }
+vec4 over(vec4 top, vec4 under) { return top + (1.0 - top.a) * under; }
+vec4 glowAt(vec2 xy) { vec3 g = vec3(0.0); float sum = 0.0;
+  for (int i = 0; i < 6; i++) { if (i >= uCount) break; vec2 d = xy - uPos[i].xy; float w = exp(-dot(d, d) * 0.55) * uGlow * (0.7 + 0.5 * uInfo[i].z); g += uCore[i] * w; sum += w; }
+  float a = min(sum, 0.6); return vec4(g * (a / max(sum, 1e-4)), a) * 0.45; }
+vec4 behind(vec3 ro, vec3 rd, vec3 L) {
+  float tt = (TILE_Z - ro.z) / min(rd.z, -1e-4); vec3 p = ro + rd * tt; float d = tileDist2(p.xy); float px = 1.5 * uFov * tt / uRes.y;
+  float cover = 1.0 - smoothstep(-px, px, d); float tp = (PLANE_Z - ro.z) / min(rd.z, -1e-4); vec3 q = ro + rd * tp;
+  vec4 card = over(vec4(0.0, 0.0, 0.0, (1.0 - softShadow(q, L, -1)) * uShadow), glowAt(q.xy));
+  if (cover <= 0.0) return card;
+  vec2 e = vec2(0.01, 0.0);
+  vec2 g = normalize(vec2(tileDist2(p.xy + e.xy) - tileDist2(p.xy - e.xy), tileDist2(p.xy + e.yx) - tileDist2(p.xy - e.yx)) + 1e-5);
+  float bevel = smoothstep(-0.07, 0.0, d); float lit = dot(g, normalize(L.xy + 1e-5));
+  vec4 c = vec4(uFg * 0.055, 0.055);
+  c = over(vec4(vec3(1.0), 1.0) * bevel * max(lit, 0.0) * 0.5, c);
+  c = over(vec4(0.0, 0.0, 0.0, bevel * max(-lit, 0.0) * 0.06), c);
+  c = over(vec4(0.0, 0.0, 0.0, (1.0 - softShadow(p, L, -1)) * uShadow * 0.55), c);
+  c = over(c, glowAt(p.xy) * 0.6);
+  return mix(card, c, cover); }
+vec4 shapeShade(vec3 p, vec3 rd, int id, int skip, vec3 L) {
+  int i = id / 4; int sub = id - i * 4; int kind = int(uInfo[i].x + 0.5); float hover = uInfo[i].z;
+  vec3 n = calcNormal(p, skip); vec3 lq = (transpose(uRot[i]) * (p - uPos[i].xyz)) / (uPos[i].w * uSquash[i]);
+  float facing = clamp(dot(n, -rd), 0.0, 1.0); float radial;
+  if (kind == 2) { vec3 l = layerFrame(lq) - vec3(0.0, layerY(sub, uInfo[i].w), 0.0); radial = clamp(1.0 - length(l.xz) / 1.4, 0.0, 1.0); }
+  else if (kind == 3) radial = clamp(1.0 - length(lq * vec3(1.0, 0.75, 1.0)) / 1.5, 0.0, 1.0);
+  else radial = clamp(1.0 - length(lq.xy) / 1.3, 0.0, 1.0);
+  float core = clamp(0.45 * pow(facing, 1.6) + 0.7 * radial, 0.0, 1.0);
+  vec3 base = mix(uRim[i], uCore[i], smoothstep(0.06, 0.9, core));
+  if (kind == 4) { float y = brushFrame(lq).y; base = mix(base, mix(uRim[i], vec3(1.0), 0.35), smoothstep(0.3, 0.55, y) * 0.65); base *= mix(1.0, 0.82, smoothstep(0.1, -0.2, y)); }
+  if (kind == 1) { float side = smoothstep(-0.04, 0.04, lq.x); base = mix(uCore[i] * 0.55, mix(uRim[i], vec3(1.0), 0.4), side); }
+  if (kind == 5) { float x = eraserFrame(lq).x; base = mix(base, mix(uRim[i], vec3(1.0), 0.25), smoothstep(0.2, 0.3, x) * 0.7); }
+  float sh = softShadow(p, L, i); float dif = clamp(dot(n, L) * 0.5 + 0.5, 0.0, 1.0);
+  vec3 col = base * (0.8 + 0.3 * dif) * mix(0.8, 1.0, sh);
+  float fres = pow(1.0 - facing, 2.4); col = mix(col, mix(uRim[i], vec3(1.0), 0.55), fres * 0.6);
+  col += uRim[i] * pow(clamp(dot(n, -L) * 0.5 + 0.5, 0.0, 1.0), 3.0) * 0.18;
+  vec3 hv = normalize(L - rd); col += vec3(1.0) * pow(max(dot(n, hv), 0.0), 56.0) * 0.42 * sh;
+  col = mix(col, col * 1.06 + 0.015, hover);
+  float soft = kind == 0 ? 0.32 : kind == 2 ? 0.12 : 0.16; float a = smoothstep(0.0, soft, facing);
+  if (kind == 2) a *= 0.8;
+  return vec4(clamp(col, 0.0, 1.0) * a, a); }
+vec2 march(vec3 ro, vec3 rd, float t, float tMax, int skip) {
+  for (int i = 0; i < 90; i++) { vec2 h = map(ro + rd * t, skip); if (h.x < 0.0025) return vec2(t, h.y); t += h.x; if (t > tMax) break; } return vec2(tMax, -1.0); }
+bool mayHit(vec3 ro, vec3 rd) { for (int i = 0; i < 6; i++) { if (i >= uCount) break; vec3 oc = ro - uPos[i].xyz; float r = 1.95 * uPos[i].w; float b = dot(oc, rd);
+  if (b * b - dot(oc, oc) + r * r > 0.0) return true; } return false; }
+vec4 render(vec3 ro, vec3 rd, vec3 L) {
+  if (!mayHit(ro, rd)) return behind(ro, rd, L);
+  float t = max(0.0, (2.4 - ro.z) / min(rd.z, -1e-4)); float tEnd = (TILE_Z - ro.z) / min(rd.z, -1e-4); vec4 acc = vec4(0.0); int skip = -1;
+  for (int layer = 0; layer < 3; layer++) { vec2 h = march(ro, rd, t, tEnd, skip); if (h.y < 0.0) break; vec3 p = ro + rd * h.x;
+    acc = over(acc, shapeShade(p, rd, int(h.y + 0.5), skip, L)); if (acc.a > 0.985) return acc; skip = int(h.y + 0.5); t = h.x + 0.01; }
+  return over(acc, behind(ro, rd, L)); }
+vec4 lensLayer(vec2 o, float r) { vec4 c = vec4(vec3(1.0) * 0.06, 0.06);
+  float rim = smoothstep(0.84, 0.975, r) * (1.0 - smoothstep(0.975, 1.0, r)); c = over(vec4(vec3(1.0), 1.0) * rim * 0.5, c);
+  float line = smoothstep(0.955, 0.985, r) * (1.0 - smoothstep(0.985, 1.0, r)); c = over(vec4(uFg, 1.0) * line * 0.16, c);
+  float spot = smoothstep(0.55, 0.0, length(o - vec2(-0.42, 0.48))); c = over(vec4(vec3(1.0), 1.0) * spot * 0.3, c); return c; }
+void main() {
+  vec2 uv = (gl_FragCoord.xy - 0.5 * uRes) / (0.5 * uRes.y); vec3 ro = uEye; vec3 rd = normalize(uRight * uv.x * uFov + uUp * uv.y * uFov - uBack); vec3 L = normalize(uLight);
+  vec4 glass = vec4(0.0);
+  if (uLens.w > 0.002) { float tl = (LENS_Z - ro.z) / min(rd.z, -1e-4); vec3 lp = ro + rd * tl; vec2 o = (lp.xy - uLens.xy) / uLens.z; float r = length(o);
+    if (r < 1.0) { glass = lensLayer(o, r) * uLens.w; float bend = 0.13 * uLens.w * (1.0 - 0.25 * r * r); ro = lp; rd = normalize(rd - vec3(o * bend, 0.0)); } }
+  outColor = over(glass, render(ro, rd, L));
+}`;
+  const compile = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { console.error('fa-tools:', gl.getShaderInfoLog(s)); return null; } return s; };
+  const vs = compile(gl.VERTEX_SHADER, VERT), fs = compile(gl.FRAGMENT_SHADER, FRAG);
+  const program = gl.createProgram();
+  if (!vs || !fs) { flat(); return; }
+  gl.attachShader(program, vs); gl.attachShader(program, fs); gl.linkProgram(program);
+  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) { console.error('fa-tools:', gl.getProgramInfoLog(program)); flat(); return; }
+  const U = {}; ['uRes','uCount','uPos','uRot','uInfo','uSquash','uCore','uRim','uStrip','uStripCount','uDisc','uDiscCount','uEye','uRight','uUp','uBack','uFov','uLight','uLens','uFg','uShadow','uGlow']
+    .forEach(n => { U[n] = gl.getUniformLocation(program, n); });
+  const vao = gl.createVertexArray();
+  const pos = new Float32Array(24), rot = new Float32Array(54), info = new Float32Array(24), squash = new Float32Array(18), core = new Float32Array(18), rim = new Float32Array(18), strips = new Float32Array(16), discs = new Float32Array(18);
+  TOOLS.forEach((t, i) => { core.set(hex(t.c[0]), i * 3); rim.set(hex(t.c[1]), i * 3); });
+  const fg = [0.91, 0.93, 0.95];
+
+  // buttons over the shapes: real, focusable, labelled
+  const btns = TOOLS.map((t, i) => {
+    const b = document.createElement('button'); b.type = 'button'; b.setAttribute('aria-label', t.n); b.setAttribute('aria-pressed', 'false');
+    b.addEventListener('pointerenter', () => { hovered = i; showCap(i); }); b.addEventListener('pointerleave', () => { if (hovered === i) hovered = null; showCap(selected); });
+    b.addEventListener('focus', () => { hovered = i; showCap(i); }); b.addEventListener('blur', () => { if (hovered === i) hovered = null; showCap(selected); });
+    b.addEventListener('pointerdown', e => { if (e.button > 0) return; b.setPointerCapture(e.pointerId); drag = { i, x: e.clientX, y: e.clientY, lx: e.clientX, ly: e.clientY, lt: performance.now(), moved: false }; anims[i].vYaw = anims[i].vPitch = 0; });
+    b.addEventListener('pointerup', e => { if (!drag || drag.i !== i) return; const d = drag; drag = null; b.releasePointerCapture(e.pointerId); if (!d.moved) toggle(i); if (e.pointerType === 'touch') pointer.inside = false; });
+    b.addEventListener('pointercancel', () => { drag = null; });
+    b.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(i); } });
+    stage.appendChild(b); return b;
+  });
+  const anims = TOOLS.map(() => ({ hover: 0, sel: 0, yaw: 0, pitch: 0, vYaw: 0, vPitch: 0, roll: 0, squash: 0, vSquash: 0 }));
+  const toggle = i => { selected = selected === i ? null : i; btns.forEach((b, k) => b.setAttribute('aria-pressed', String(k === selected))); showCap(selected ?? i);
+    if (selected != null && !reduced) { anims[i].vYaw += 11; anims[i].vSquash += 7; } };
+  const pointer = { x: .5, y: .5, inside: false }; let drag = null;
+  stage.addEventListener('pointermove', e => { const r = stage.getBoundingClientRect();
+    pointer.x = clamp((e.clientX - r.left) / r.width, 0, 1); pointer.y = clamp((e.clientY - r.top) / r.height, 0, 1); pointer.inside = e.pointerType !== 'touch' || !!drag;
+    if (drag) { const a = anims[drag.i], now = performance.now(), dx = e.clientX - drag.lx, dy = e.clientY - drag.ly;
+      if (Math.hypot(e.clientX - drag.x, e.clientY - drag.y) > 5) drag.moved = true;
+      const dtm = Math.max((now - drag.lt) / 1000, 1 / 240);
+      a.yaw += dx * .012; a.pitch = clamp(a.pitch + dy * .012, -1.2, 1.2); a.vYaw = a.vYaw * .4 + dx * .012 / dtm * .6; a.vPitch = a.vPitch * .4 + dy * .012 / dtm * .6;
+      drag.lx = e.clientX; drag.ly = e.clientY; drag.lt = now; } });
+  stage.addEventListener('pointerleave', () => { pointer.inside = false; });
+
+  let cssW = 1, cssH = 1;
+  const resize = () => { const dpr = Math.min(devicePixelRatio || 1, 1.6); cssW = Math.max(stage.clientWidth, 1); cssH = Math.max(stage.clientHeight, 1);
+    canvas.width = Math.floor(cssW * dpr); canvas.height = Math.floor(cssH * dpr); };
+  new ResizeObserver(resize).observe(stage); resize();
+
+  let camYaw = 0, camPitch = 0, lightX = 0, lightY = 0, lensX = 0, lensY = 0, lensVis = 0, lensPlaced = false, t = 0, last = performance.now(), visible = true;
+  new IntersectionObserver(es => { visible = es.some(e => e.isIntersecting); }).observe(stage);
+  const paint = () => {
+    const now = performance.now(), dt = Math.min((now - last) / 1000, .05); last = now;
+    const idle = !reduced; if (idle) t += dt;
+    const lay = layoutStage(cssW / cssH), k = r => reduced ? 1 : 1 - Math.exp(-r * dt);
+    const px = pointer.inside ? pointer.x - .5 : idle ? Math.sin(t * .23) * .22 : 0, py = pointer.inside ? pointer.y - .5 : idle ? Math.sin(t * .31 + 1) * .12 : 0;
+    camYaw += (px * .3 - camYaw) * k(3); camPitch += (-py * .2 - camPitch) * k(3); lightX += (px * 1.6 - lightX) * k(4); lightY += (-py * 1.2 - lightY) * k(4);
+    const cam = makeCamera(camYaw, camPitch, lay.fit);
+    for (let i = 0; i < N; i++) {
+      const a = anims[i], kind = TOOLS[i].k;
+      a.hover += ((hovered === i || drag?.i === i ? 1 : 0) - a.hover) * k(9); a.sel += ((selected === i ? 1 : 0) - a.sel) * k(6);
+      if (reduced) { a.vYaw = a.vPitch = a.vSquash = a.squash = 0; }
+      else if (!drag || drag.i !== i) { a.yaw += a.vYaw * dt; a.pitch += a.vPitch * dt; a.vYaw *= Math.exp(-2.4 * dt); a.vPitch = a.vPitch * Math.exp(-3 * dt) - a.pitch * 14 * dt; }
+      a.vSquash += (-a.squash * 170 - a.vSquash * 9) * dt; a.squash += a.vSquash * dt; if (reduced) a.squash = a.vSquash = 0;
+      if (kind === 1 && !reduced) a.roll += dt * (.15 + 2.2 * a.hover);
+      const [hx, hy] = lay.pts[i], bob = idle ? Math.sin(t * 1.05 + i * 1.3) * .07 : 0, lift = .5 * a.hover + .22 * a.sel, s = 1 + .06 * a.hover + .03 * a.sel;
+      pos.set([hx, hy + bob, lift, s], i * 4);
+      rotation(a.yaw + (idle ? Math.sin(t * .45 + i * 1.7) * .4 : 0), a.pitch + (idle ? Math.sin(t * .37 + i * 2.3) * .2 : 0), a.roll, rot, i * 9);
+      info.set([kind, 0, a.hover, 1 + .9 * Math.max(a.hover, a.sel * .45)], i * 4);
+      const sq = clamp(a.squash, -.6, .6); squash.set([1 + .1 * sq, 1 - .14 * sq, 1 + .1 * sq], i * 3);
+      const [sx, sy, unit] = project(cam, [hx, hy + bob, lift], cssW, cssH), r = unit * 1.12 * s;
+      btns[i].style.width = btns[i].style.height = Math.round(r * 2) + 'px'; btns[i].style.transform = 'translate(' + (sx - r).toFixed(1) + 'px,' + (sy - r).toFixed(1) + 'px)';
+    }
+    const st = stripsFor(lay.pts); strips.fill(0); st.forEach((s, j) => strips.set([s[0], s[1], s[2], 0], j * 4));
+    let dc = 0; TOOLS.forEach((tt, i) => { if (tt.tile === 'disc') discs.set([lay.pts[i][0], lay.pts[i][1], 1.3], dc++ * 3); });
+    const p0 = lay.pts[0]; let tx = p0[0] - (lay.rows === 1 ? SPACING * .6 : SPACING * .5), ty = p0[1] - (lay.rows === 1 ? 0 : .3);
+    if (pointer.inside) [tx, ty] = unproject(cam, pointer.x * cssW, pointer.y * cssH, cssW, cssH, 1.9);
+    if (!lensPlaced) { lensX = tx; lensY = ty; lensPlaced = true; }
+    lensX += (tx - lensX) * k(pointer.inside ? 7 : 2.5); lensY += (ty - lensY) * k(pointer.inside ? 7 : 2.5); lensVis += ((pointer.inside ? 1 : 0) - lensVis) * k(5);
+
+    gl.useProgram(program); gl.bindVertexArray(vao); gl.viewport(0, 0, canvas.width, canvas.height); gl.clearColor(0, 0, 0, 0); gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.uniform2f(U.uRes, canvas.width, canvas.height); gl.uniform1i(U.uCount, N);
+    gl.uniform4fv(U.uPos, pos); gl.uniformMatrix3fv(U.uRot, false, rot); gl.uniform4fv(U.uInfo, info); gl.uniform3fv(U.uSquash, squash);
+    gl.uniform3fv(U.uCore, core); gl.uniform3fv(U.uRim, rim); gl.uniform4fv(U.uStrip, strips); gl.uniform1i(U.uStripCount, st.length);
+    gl.uniform3fv(U.uDisc, discs); gl.uniform1i(U.uDiscCount, dc);
+    gl.uniform3fv(U.uEye, cam.eye); gl.uniform3fv(U.uRight, cam.right); gl.uniform3fv(U.uUp, cam.up); gl.uniform3fv(U.uBack, cam.back); gl.uniform1f(U.uFov, cam.fov);
+    gl.uniform3f(U.uLight, -.45 + lightX, .6 + lightY, 1.3); gl.uniform4f(U.uLens, lensX, lensY, 1.0, lensVis); gl.uniform3fv(U.uFg, fg);
+    gl.uniform1f(U.uShadow, .5 * .13); gl.uniform1f(U.uGlow, .8 * .5);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+  };
+  const loop = () => { if (visible && !document.hidden) paint(); else last = performance.now(); if (!reduced) requestAnimationFrame(loop); };
+  paint(); if (!reduced) requestAnimationFrame(loop); else { addEventListener('pointermove', () => requestAnimationFrame(paint), { passive: true }); }
+})();
+</script>
+<script>
+(() => {
+  /* broad nib: every step sweeps a line segment of fixed length and angle, so thick and thin come from direction, like a reed pen */
+  const cv = document.getElementById('callCv'), g = cv.getContext('2d');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const S = 2, W = 600, H = 360, w = 20, th = -45 * Math.PI / 180;            // nib width, nib edge angle
+  const E = [Math.cos(th) * w / 2, Math.sin(th) * w / 2], U = [-Math.sin(th) * w, Math.cos(th) * w];
+  const step = Math.abs(E[1] * 2) + Math.abs(U[1]);                            // vertical size of one rhombic dot
+  const base = 262, alifDots = 5, top = base - alifDots * step;
+  const bez = (p, n = 60) => { const out = []; for (let i = 0; i <= n; i++) { const t = i / n, a = 1 - t;
+    out.push([a*a*a*p[0][0] + 3*a*a*t*p[1][0] + 3*a*t*t*p[2][0] + t*t*t*p[3][0], a*a*a*p[0][1] + 3*a*a*t*p[1][1] + 3*a*t*t*p[2][1] + t*t*t*p[3][1]]); } return out; };
+  const alif = bez([[452, top + 4], [446, top + 40], [446, base - 50], [440, base - 2]], 50);
+  const ba = [...bez([[372, base - 34], [374, base - 20], [372, base - 6], [356, base - 2]], 18),
+              ...bez([[356, base - 2], [300, base + 8], [190, base + 10], [150, base - 6]], 60),
+              ...bez([[150, base - 6], [140, base - 12], [136, base - 26], [140, base - 40]], 20)];
+  const dotC = [262, base + step * 1.4];
+  const dot = [[dotC[0] - U[0] / 2, dotC[1] - U[1] / 2], [dotC[0] + U[0] / 2, dotC[1] + U[1] / 2]];
+  const ladder = Array.from({ length: alifDots }, (_, i) => [512 + (i % 2 ? 7 : -7), base - step * (i + .5)]);
+  const ink = '#eef6fa';
+  const quad = (a, b) => { g.beginPath(); g.moveTo(a[0] - E[0], a[1] - E[1]); g.lineTo(a[0] + E[0], a[1] + E[1]); g.lineTo(b[0] + E[0], b[1] + E[1]); g.lineTo(b[0] - E[0], b[1] - E[1]); g.closePath(); g.fill(); g.stroke(); };
+  const stroke = (pts, k) => { const n = Math.floor((pts.length - 1) * k); for (let i = 0; i < n; i++) quad(pts[i], pts[i + 1]);
+    if (k < 1 && n < pts.length - 1) { const t = (pts.length - 1) * k - n, a = pts[n], b = pts[n + 1]; quad(a, [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t]); return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t]; }
+    return pts[Math.max(0, n)]; };
+  const rh = (c) => quad([c[0] - U[0] / 2, c[1] - U[1] / 2], [c[0] + U[0] / 2, c[1] + U[1] / 2]);
+  const clamp = v => v < 0 ? 0 : v > 1 ? 1 : v;
+  const T = { ladder: [0, 1.4], guides: [1.2, 2.0], alif: [2.1, 3.0], ba: [3.2, 5.0], dot: [5.2, 5.6], hold: 7.6, fade: 8.2 };
+  const seg = (t, [a, b]) => clamp((t - a) / (b - a));
+  function draw(t) {
+    g.setTransform(S, 0, 0, S, 0, 0); g.clearRect(0, 0, W, H);
+    const fade = t > T.hold ? 1 - clamp((t - T.hold) / (T.fade - T.hold)) : 1;
+    g.globalAlpha = fade;
+    // guides
+    const gk = seg(t, T.guides);
+    g.strokeStyle = 'rgba(92,200,224,.5)'; g.lineWidth = 1; g.setLineDash([5, 6]);
+    [[top, 'ألف'], [base, 'سطر'], [base + 2 * step, 'نزول']].forEach(([y, lab], i) => {
+      g.beginPath(); g.moveTo(560, y); g.lineTo(560 - 520 * gk, y); g.stroke();
+      g.save(); g.setLineDash([]); g.fillStyle = 'rgba(232,238,242,' + (.55 * gk) + ')'; g.font = '500 12px "Readex Pro", sans-serif'; g.textAlign = 'right'; g.fillText(lab, 584, y + 4); g.restore(); });
+    g.setLineDash([]);
+    // dot ladder
+    g.fillStyle = '#5cc8e0'; g.strokeStyle = '#5cc8e0'; g.lineWidth = .8;
+    ladder.forEach((c, i) => { const k = clamp(seg(t, T.ladder) * alifDots - i); if (k > 0) { g.globalAlpha = fade * k; rh(c); } });
+    g.globalAlpha = fade;
+    if (seg(t, T.ladder) >= 1) { g.fillStyle = 'rgba(232,238,242,.6)'; g.font = '500 12px "Readex Pro", sans-serif'; g.textAlign = 'center'; g.fillText(alifDots + ' نقاط', 512, top - 12); }
+    // ink
+    g.strokeStyle = ink; g.lineWidth = .8; g.fillStyle = ink; g.shadowColor = 'rgba(92,200,224,.35)'; g.shadowBlur = 8;
+    let nib = null;
+    const ka = seg(t, T.alif), kb = seg(t, T.ba), kd = seg(t, T.dot);
+    if (ka > 0) nib = stroke(alif, ka);
+    if (kb > 0) nib = stroke(ba, kb);
+    if (kd > 0) nib = stroke(dot, kd);
+    g.shadowBlur = 0;
+    // the nib itself while writing
+    const writing = (ka > 0 && ka < 1) || (kb > 0 && kb < 1) || (kd > 0 && kd < 1);
+    if (nib && writing) { g.strokeStyle = '#5cc8e0'; g.lineWidth = 3; g.lineCap = 'round'; g.beginPath(); g.moveTo(nib[0] - E[0] * 1.25, nib[1] - E[1] * 1.25); g.lineTo(nib[0] + E[0] * 1.25, nib[1] + E[1] * 1.25); g.stroke();
+      g.strokeStyle = 'rgba(92,200,224,.35)'; g.lineWidth = 1.5; g.beginPath(); g.moveTo(nib[0], nib[1]); g.lineTo(nib[0] + 60, nib[1] - 70); g.stroke(); }
+    g.globalAlpha = 1;
+  }
+  if (reduce) { draw(T.hold); return; }
+  let t0 = null, vis = false;
+  new IntersectionObserver(es => { vis = es[0].isIntersecting; }).observe(cv);
+  const loop = now => { if (vis) { if (t0 == null) t0 = now; let t = (now - t0) / 1000; if (t > T.fade + .4) { t0 = now; t = 0; } draw(t); } else t0 = null; requestAnimationFrame(loop); };
+  draw(T.hold); requestAnimationFrame(loop);
+})();
+</script>
+
+</body></html>
